@@ -82,7 +82,7 @@
 				
 				// Hold all data to be posted
 				var post_data = {
-					action:'form_builder_submit'
+					action:'orbis_twinfield_synchronize'
 				};
 				
 				// Go over each input, store in post_data in a format ready for ajax submission

@@ -19,8 +19,10 @@ class Orbis_Twinfield_Plugin extends Orbis_Plugin {
 
 		$this->plugin_include( 'includes/post.php' );
 
-		add_action( 'admin_enqueue_scripts',       array( $this, 'admin_enqueue_scripts' ) );
-		add_action( 'wp_ajax_form_builder_submit', array( $this, 'form_builder_submit' ) );
+		// Actions
+		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
+
+		add_action( 'wp_ajax_orbis_twinfield_synchronize', array( $this, 'ajax_twinfield_syncrhonize' ) );
 	}
 
 	//////////////////////////////////////////////////
@@ -46,9 +48,9 @@ class Orbis_Twinfield_Plugin extends Orbis_Plugin {
 	//////////////////////////////////////////////////
 
 	/**
-	 * Form builder submit
+	 * AJAX Twinfield synchronize
 	 */
-	function form_builder_submit() {
+	function ajax_twinfield_syncrhonize() {
 		$customer = new \Pronamic\WP\Twinfield\FormBuilder\Form\Customer();
 	
 		$data = $_POST;
