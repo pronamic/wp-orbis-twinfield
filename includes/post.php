@@ -9,6 +9,7 @@ function orbis_twinfield_init() {
 add_action( 'init', 'orbis_twinfield_init' );
 
 function orbis_twinfield_customer_meta_box() {
+	global $orbis_twinfield_plugin;
 	global $post;
 
 	$id         = get_post_meta( $post->ID, '_twinfield_customer_id', true );
@@ -25,7 +26,7 @@ function orbis_twinfield_customer_meta_box() {
 	$city       = get_post_meta( $post->ID, '_orbis_company_city', true );
 	$country    = get_post_meta( $post->ID, '_orbis_company_country', true );
 
-	include ORBIS_TWINFIELD_FOLDER . '/views/orbis_twinfield_customer_meta_box.php';
+	$orbis_twinfield_plugin->plugin_include( 'views/orbis_twinfield_customer_meta_box.php' );
 }
 
 add_action( 'twinfield_customer_meta_box', 'orbis_twinfield_customer_meta_box' );
