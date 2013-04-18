@@ -38,7 +38,7 @@ class Orbis_Twinfield_Plugin extends Orbis_Plugin {
 	 * Admin enqueue scripts
 	 */
 	public function admin_enqueue_scripts() {
-		wp_register_script( 'orbis-twinfield-admin', $this->plugin_url( 'assets/orbis-twinfield-admin.js' ), array( 'jquery' ) );
+		wp_register_script( 'orbis-twinfield-admin', $this->plugin_url( 'assets/admin.js' ), array( 'jquery' ) );
 
 		wp_enqueue_script( 'orbis-twinfield-admin' );
 	}
