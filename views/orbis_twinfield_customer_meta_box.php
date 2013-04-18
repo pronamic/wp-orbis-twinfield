@@ -1,3 +1,22 @@
+<?php 
+
+global $post;
+
+$id         = get_post_meta( $post->ID, '_twinfield_customer_id', true );
+$title      = $post->post_title;
+$post_id    = $post->ID;
+
+// Perhaps move all this into a class to represent orbis_company
+$kvk_number = get_post_meta( $post->ID, '_orbis_company_kvk_number', true );
+$email      = get_post_meta( $post->ID, '_orbis_company_email', true );
+$website    = get_post_meta( $post->ID, '_orbis_company_website', true );
+
+$address    = get_post_meta( $post->ID, '_orbis_company_address', true );
+$postcode   = get_post_meta( $post->ID, '_orbis_company_postcode', true );
+$city       = get_post_meta( $post->ID, '_orbis_company_city', true );
+$country    = get_post_meta( $post->ID, '_orbis_company_country', true );
+
+?>
 <div class="jFormBuilderBox">
 	<div class="jFormBuilderBoxMessages"></div>
 
@@ -18,5 +37,5 @@
 	<input type="hidden" name="addresses[1][country]" value="<?php echo $country; ?>" />
 	<input type="hidden" name="addresses[1][email]" value="<?php echo $email; ?>" />
 
-	<input type="submit" value="<?php _e( 'Syncrhonize', 'orbis_twinfield' ); ?>" class="button" />
+	<input type="submit" value="<?php _e( 'Synchronize', 'orbis_twinfield' ); ?>" class="button" />
 </div>
