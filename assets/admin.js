@@ -45,6 +45,7 @@
 				
 				// Builds the DOM elements for the form_builder_metabox
 				OTA.form_builder_metabox.config.dom.holder = $('.jFormBuilderBox');
+				OTA.form_builder_metabox.config.dom.spinner = $('.jFormBuilderBox .spinner');
 				OTA.form_builder_metabox.config.dom.message_holder = $('.jFormBuilderBoxMessages');
 				OTA.form_builder_metabox.config.dom.inputs = OTA.form_builder_metabox.config.dom.holder.find('input[type=hidden]');
 				OTA.form_builder_metabox.config.dom.submit = OTA.form_builder_metabox.config.dom.holder.find('input[type=submit]');
@@ -91,6 +92,7 @@
 					post_data[_element.attr('name')] = _element.val();
 				} );
 				
+				OTA.form_builder_metabox.config.dom.spinner.show();
 				OTA.form_builder_metabox.config.dom.message_holder.empty()
 				
 				$.ajax( {
@@ -105,6 +107,8 @@
 				} );
 			},
 			success: function(data) {
+				OTA.form_builder_metabox.config.dom.spinner.hide();
+
 				if ( ! data.resp ) {
 					OTA.form_builder_metabox.config.dom.message_holder.empty().prepend(data.errors);
 				} else {

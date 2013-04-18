@@ -38,4 +38,6 @@ $country    = get_post_meta( $post->ID, '_orbis_company_country', true );
 	<input type="hidden" name="addresses[1][email]" value="<?php echo $email; ?>" />
 
 	<input type="submit" value="<?php _e( 'Synchronize', 'orbis_twinfield' ); ?>" class="button" />
+
+	<span class="spinner" style="float: left;"></span>
 </div>
