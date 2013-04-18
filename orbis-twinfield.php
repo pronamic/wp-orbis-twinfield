@@ -18,9 +18,6 @@ License: GPL
 GitHub URI: https://github.com/pronamic/wp-orbis-twinfield
 */
 
-define( 'ORBIS_TWINFIELD_FILE', __FILE__ );
-define( 'ORBIS_TWINFIELD_FOLDER', dirname( __FILE__ ) );
-
 function orbis_twinfield_bootstrap() {
 	include 'classes/orbis-twinfield-plugin.php';
 
