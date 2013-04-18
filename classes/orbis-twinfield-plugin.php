@@ -1,27 +1,54 @@
 <?php
 
+/**
+ * Title: Orbis Twinfield plugin
+ * Description: 
+ * Copyright: Copyright (c) 2013
+ * Company: Pronamic
+ * @author Remco Tolsma
+ * @version 1.0
+ */
 class Orbis_Twinfield_Plugin extends Orbis_Plugin {
+	/**
+	 * Construct and initialize the plugin
+	 * 
+	 * @param string $file plugin main file
+	 */
 	public function __construct( $file ) {
 		parent::__construct( $file );
 
 		$this->plugin_include( 'includes/post.php' );
 
-		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
+		add_action( 'admin_enqueue_scripts',       array( $this, 'admin_enqueue_scripts' ) );
 		add_action( 'wp_ajax_form_builder_submit', array( $this, 'form_builder_submit' ) );
 	}
 
+	//////////////////////////////////////////////////
+
+	/**
+	 * Loaded
+	 */
 	public function loaded() {
 		$this->load_textdomain( 'orbis_twinfield', '/languages/' );
 	}
 
+	//////////////////////////////////////////////////
+
+	/**
+	 * Admin enqueue scripts
+	 */
 	public function admin_enqueue_scripts() {
 		wp_register_script( 'orbis-twinfield-admin', $this->plugin_url( 'assets/orbis-twinfield-admin.js' ), array( 'jquery' ) );
 
 		wp_enqueue_script( 'orbis-twinfield-admin' );
 	}
 
+	//////////////////////////////////////////////////
+
+	/**
+	 * Form builder submit
+	 */
 	function form_builder_submit() {
-	
 		$customer = new \Pronamic\WP\Twinfield\FormBuilder\Form\Customer();
 	
 		$data = $_POST;
@@ -33,14 +60,18 @@ class Orbis_Twinfield_Plugin extends Orbis_Plugin {
 		$notice = new \ZFramework\Util\Notice();
 	
 		if ( $customer->submit( $data ) ) {
-	
-			$customer_response = Pronamic\Twinfield\Customer\Mapper\CustomerMapper::map($customer->get_response());
+			$customer_response = Pronamic\Twinfield\Customer\Mapper\CustomerMapper::map( $customer->get_response() );
 	
 			update_post_meta( $data['post_id'], '_twinfield_customer_id', $customer_response->getID() );
 	
 			$notice->updated( 'Successful!' );
 	
-			echo json_encode( array( 'resp' => true, 'id' => $customer_response->getID(), 'message' => $notice->retrieve() ) );
+			echo json_encode( array(
+				'resp'    => true,
+				'id'      => $customer_response->getID(),
+				'message' => $notice->retrieve()
+			) );
+
 			exit;
 		} else {
 			$errors = $customer->get_response()->getErrorMessages();
@@ -49,7 +80,11 @@ class Orbis_Twinfield_Plugin extends Orbis_Plugin {
 				$notice->error( $error );
 			}
 	
-			echo json_encode( array( 'resp' => false, 'errors' => $notice->retrieve() ) );
+			echo json_encode( array(
+				'resp'   => false,
+				'errors' => $notice->retrieve()
+			) );
+
 			exit;
 		}
 	}
