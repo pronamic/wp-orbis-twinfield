@@ -31,11 +31,7 @@ function orbis_twinfield_bootstrap() {
 
 add_action( 'orbis_bootstrap', 'orbis_twinfield_bootstrap' );
 
-add_action( 'admin_enqueue_scripts', 'orbis_twinfield_assets' );
-function orbis_twinfield_assets() {
-	wp_register_script( 'orbis-twinfield-admin', plugins_url( '/assets/orbis-twinfield-admin.js', ORBIS_TWINFIELD_FILE ), array( 'jquery' ) );
-	wp_enqueue_script( 'orbis-twinfield-admin' );
-}
+
 
 add_action( 'wp_ajax_form_builder_submit', 'orbis_twinfield_form_builder_submit' );
 function orbis_twinfield_form_builder_submit() {
