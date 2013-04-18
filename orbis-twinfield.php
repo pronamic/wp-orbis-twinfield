@@ -45,7 +45,7 @@ function orbis_twinfield_form_builder_submit() {
 	$data = $_POST;
 	if ( empty( $data['id'] ) ) {
 		$extra = $customer->extra_variables();
-		//$data['id'] = $extra['latest_customer_id'];
+		$data['id'] = $extra['latest_customer_id'];
 	}
 	
 	$notice = new \ZFramework\Util\Notice();
@@ -53,6 +53,8 @@ function orbis_twinfield_form_builder_submit() {
 	if ( $customer->submit( $data ) ) {
 		
 		$customer_response = Pronamic\Twinfield\Customer\Mapper\CustomerMapper::map($customer->get_response());
+		
+		update_post_meta( $data['post_id'], '_twinfield_customer_id', $customer_response->getID() );
 		
 		$notice->updated( 'Successful!' );
 		

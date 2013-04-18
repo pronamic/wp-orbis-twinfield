@@ -14,6 +14,7 @@ function orbis_twinfield_customer_meta_box() {
 	
 	$id = get_post_meta( $post->ID, '_twinfield_customer_id', true );
 	$title = $post->post_title;
+	$post_id = $post->ID;
 	
 	// Perhaps move all this into a class to represent orbis_company
 	$kvk_number = get_post_meta( $post->ID, '_orbis_company_kvk_number', true );

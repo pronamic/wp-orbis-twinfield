@@ -1,5 +1,6 @@
 <div class="jFormBuilderBox">
 	<div class="jFormBuilderBoxMessages"></div>
+	<input type="hidden" name="post_id" value="<?php echo $post_id; ?>"/>
 	<input type="hidden" name="id" value="<?php echo $id; ?>"/>
 	<input type="hidden" name="name" value="<?php echo $title; ?>"/>
 	<input type="hidden" name="website" value="<?php echo $website; ?>"/>
