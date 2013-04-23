@@ -11,7 +11,7 @@ add_action( 'init', 'orbis_twinfield_init' );
 function orbis_twinfield_customer_meta_box() {
 	global $orbis_twinfield_plugin;
 
-	$orbis_twinfield_plugin->plugin_include( 'views/orbis_twinfield_customer_meta_box.php' );
+	$orbis_twinfield_plugin->plugin_include( 'admin/meta-box-customer.php' );
 }
 
 add_action( 'twinfield_customer_meta_box', 'orbis_twinfield_customer_meta_box' );
