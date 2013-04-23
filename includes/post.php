@@ -15,3 +15,26 @@ function orbis_twinfield_customer_meta_box() {
 }
 
 add_action( 'twinfield_customer_meta_box', 'orbis_twinfield_customer_meta_box' );
+
+
+/**
+ * Company column
+ *
+ * @param string $column
+ */
+function orbis_twinfield_company_column( $column, $post_id ) {
+	switch ( $column ) {
+		case 'orbis_company_administration':
+			$id   = get_post_meta( $post_id, '_twinfield_customer_id', true );
+
+			printf(
+				'<br /><strong>%s</strong> %s',
+				__( 'Twinfield ID:', 'orbis' ),
+				$id
+			);
+
+			break;
+	}
+}
+
+add_action( 'manage_posts_custom_column' , 'orbis_twinfield_company_column', 20, 2 );
