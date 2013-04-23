@@ -18,6 +18,7 @@ class Orbis_Twinfield_Plugin extends Orbis_Plugin {
 		parent::__construct( $file );
 
 		$this->plugin_include( 'includes/post.php' );
+		$this->plugin_include( 'includes/template.php' );
 
 		// Actions
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
