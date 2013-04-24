@@ -34,7 +34,7 @@ $fields = array(
 	'addresses[1][postcode]' => $postcode,
 	'addresses[1][city]'     => $city,
 	'addresses[1][country]'  => $country,
-	'addresses[1][email]'    => $email,
+	'addresses[1][email]'    => $email
 );
 
 ?>
