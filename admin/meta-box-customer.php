@@ -17,26 +17,38 @@ $city       = get_post_meta( $post->ID, '_orbis_company_city', true );
 $country    = get_post_meta( $post->ID, '_orbis_company_country', true );
 $ebilling   = get_post_meta( $post->ID, '_orbis_company_ebilling', true );
 
+$fields = array(
+	'post_id'                => $post_id,
+	'id'                     => $id,
+	'name'                   => $title,
+	'website'                => $website,
+	'duedays'                => 30,
+	'vatcode'                => 'VH',
+	'ebilling'               => $ebilling,
+	'ebillmail'              => $email,
+	'addresses[1][default]'  => 'true',
+	'addresses[1][type]'     => 'invoice',
+	'addresses[1][name]'     => $title,
+	'addresses[1][field2]'   => $address,
+	'addresses[1][field5]'   => $kvk_number,
+	'addresses[1][postcode]' => $postcode,
+	'addresses[1][city]'     => $city,
+	'addresses[1][country]'  => $country,
+	'addresses[1][email]'    => $email,
+);
+
 ?>
 <div class="jFormBuilderBox">
 	<div class="jFormBuilderBoxMessages"></div>
 
-	<input type="hidden" name="post_id" value="<?php echo $post_id; ?>" />
-	<input type="hidden" name="id" value="<?php echo $id; ?>" />
-	<input type="hidden" name="name" value="<?php echo $title; ?>" />
-	<input type="hidden" name="website" value="<?php echo $website; ?>" />
-	<input type="hidden" name="duedays" value="30" />
-	<input type="hidden" name="vatcode" value="VH" />
-	<input type="hidden" name="ebilling" value="<?php echo $ebilling; ?>" />
-	<input type="hidden" name="ebillmail" value="<?php echo $email; ?>" />
-	<input type="hidden" name="addresses[1][default]" value="true" />
-	<input type="hidden" name="addresses[1][type]" value="invoice" />
-	<input type="hidden" name="addresses[1][field2]" value="<?php echo $address; ?>" />
-	<input type="hidden" name="addresses[1][field5]" value="<?php echo $kvk_number; ?>" />
-	<input type="hidden" name="addresses[1][postcode]" value="<?php echo $postcode; ?>" />
-	<input type="hidden" name="addresses[1][city]" value="<?php echo $city; ?>" />
-	<input type="hidden" name="addresses[1][country]" value="<?php echo $country; ?>" />
-	<input type="hidden" name="addresses[1][email]" value="<?php echo $email; ?>" />
+	<?php 
+	
+	foreach ( $fields as $name => $value ) {
+		printf( '<input type="hidden" name="%s" value="%s" />', esc_attr( $name ), esc_attr( $value ) );
+	}
+	
+	?>
+
 	<div>
 		<input type="submit" value="<?php _e( 'Synchronize', 'orbis_twinfield' ); ?>" class="button" />
 	</div>
