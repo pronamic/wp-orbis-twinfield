@@ -10,7 +10,7 @@ Requires at least: 3.5
 Author: Pronamic
 Author URI: http://pronamic.eu/
 
-Text Domain: orbis
+Text Domain: orbis_twinfield
 Domain Path: /languages/
 
 License: GPL

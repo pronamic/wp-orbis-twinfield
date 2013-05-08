@@ -8,12 +8,12 @@ if ( ! empty( $twinfield_customer_id ) ) : ?>
 	
 	<div class="panel">
 		<header>
-			<h3><?php _e( 'Twinfield', 'orbis_subscriptions' ); ?></h3>
+			<h3><?php _e( 'Twinfield', 'orbis_twinfield' ); ?></h3>
 		</header>
 	
 		<div class="content">
 			<dl>
-				<dt><?php _e( 'Twinfield ID', 'orbis_subscriptions' ); ?></dt>
+				<dt><?php _e( 'Twinfield ID', 'orbis_twinfield' ); ?></dt>
 				<dd>
 					<?php 
 					
