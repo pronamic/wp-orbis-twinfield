@@ -102,7 +102,6 @@
 					dataType:'json',
 					success:OTA.form_builder_metabox.success,
 					error: function(one, two, three) {
-						alert(one + ' : ' + two + ' : ' + three);
 					}
 				} );
 			},
