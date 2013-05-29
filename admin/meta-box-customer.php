@@ -15,6 +15,7 @@ $address    = get_post_meta( $post->ID, '_orbis_company_address', true );
 $postcode   = get_post_meta( $post->ID, '_orbis_company_postcode', true );
 $city       = get_post_meta( $post->ID, '_orbis_company_city', true );
 $country    = get_post_meta( $post->ID, '_orbis_company_country', true );
+$vatnumber  = get_post_meta( $post->ID, '_orbis_company_vat_number', true );
 $ebilling   = get_post_meta( $post->ID, '_orbis_company_ebilling', true );
 
 $fields = array(
@@ -30,6 +31,7 @@ $fields = array(
 	'addresses[1][type]'     => 'invoice',
 	'addresses[1][name]'     => $title,
 	'addresses[1][field2]'   => $address,
+	'addresses[1][field4]'   => $vatnumber,
 	'addresses[1][field5]'   => $kvk_number,
 	'addresses[1][postcode]' => $postcode,
 	'addresses[1][city]'     => $city,
