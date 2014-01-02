@@ -1,19 +1,19 @@
 <?php
 /*
 Plugin Name: Orbis Twinfield
-Plugin URI: http://orbiswp.com/
-Description: 
+Plugin URI: http://www.orbiswp.com/
+Description: The Orbis Twinfield plugin allows you to synchronize Orbis information to Twinfield.
 
-Version: 0.1
+Version: 1.0.0
 Requires at least: 3.5
 
 Author: Pronamic
-Author URI: http://pronamic.eu/
+Author URI: http://www.pronamic.eu/
 
 Text Domain: orbis_twinfield
 Domain Path: /languages/
 
-License: GPL
+License: Copyright (c) Pronamic
 
 GitHub URI: https://github.com/pronamic/wp-orbis-twinfield
 */
