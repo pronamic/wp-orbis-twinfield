@@ -75,7 +75,7 @@ class Orbis_Twinfield_Plugin extends Orbis_Plugin {
 			echo json_encode( array(
 				'resp'    => true,
 				'id'      => $customer_response->getID(),
-				'message' => $notice->retrieve()
+				'message' => $notice->retrieve(),
 			) );
 
 			exit;
@@ -88,7 +88,7 @@ class Orbis_Twinfield_Plugin extends Orbis_Plugin {
 	
 			echo json_encode( array(
 				'resp'   => false,
-				'errors' => $notice->retrieve()
+				'errors' => $notice->retrieve(),
 			) );
 
 			exit;
