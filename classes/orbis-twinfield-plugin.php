@@ -56,10 +56,13 @@ class Orbis_Twinfield_Plugin extends Orbis_Plugin {
 	
 		$data = $_POST;
 		if ( empty( $data['id'] ) ) {
-			$extra = $customer->extra_variables();
+			$customer->prepare_extra_variables();
+
+			$extra = $customer->get_extra_variables();
+
 			$data['id'] = $extra['latest_customer_id'];
 		}
-	
+
 		$notice = new \ZFramework\Util\Notice();
 	
 		if ( $customer->submit( $data ) ) {
