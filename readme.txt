@@ -8,7 +8,7 @@ Stable tag: 1.0.0
 License: Copyright (c) Pronamic
 License URI: http://www.pronamic.eu/copyright/
 
-
+The Orbis Twinfield plugin allows you to synchronize Orbis information to Twinfield.
 
 == Description ==
 
