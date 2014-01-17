@@ -53,6 +53,7 @@ $fields = array(
 
 	<div>
 		<input type="submit" value="<?php _e( 'Synchronize', 'orbis_twinfield' ); ?>" class="button" />
+
+		<div class="spinner"></div>
 	</div>
-	<span class="spinner" style="float: left;"></span>
 </div>
