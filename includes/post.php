@@ -4,7 +4,7 @@ function orbis_twinfield_init() {
 	global $orbis_twinfield_plugin;
 
 	add_post_type_support( 'orbis_company', 'twinfield_customer' );
-	add_post_type_support( 'orbis_subs_type', 'twinfield_article' );
+	add_post_type_support( 'orbis_subs_product', 'twinfield_article' );
 }
 
 add_action( 'init', 'orbis_twinfield_init' );
