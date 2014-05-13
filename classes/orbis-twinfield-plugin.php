@@ -2,7 +2,7 @@
 
 /**
  * Title: Orbis Twinfield plugin
- * Description: 
+ * Description:
  * Copyright: Copyright (c) 2013
  * Company: Pronamic
  * @author Remco Tolsma
@@ -11,7 +11,7 @@
 class Orbis_Twinfield_Plugin extends Orbis_Plugin {
 	/**
 	 * Construct and initialize the plugin
-	 * 
+	 *
 	 * @param string $file plugin main file
 	 */
 	public function __construct( $file ) {
@@ -53,7 +53,7 @@ class Orbis_Twinfield_Plugin extends Orbis_Plugin {
 	 */
 	function ajax_twinfield_syncrhonize() {
 		$customer = new \Pronamic\WP\Twinfield\FormBuilder\Form\Customer();
-	
+
 		$data = $_POST;
 		if ( empty( $data['id'] ) ) {
 			$customer->prepare_extra_variables();
@@ -64,14 +64,14 @@ class Orbis_Twinfield_Plugin extends Orbis_Plugin {
 		}
 
 		$notice = new \ZFramework\Util\Notice();
-	
+
 		if ( $customer->submit( $data ) ) {
 			$customer_response = Pronamic\Twinfield\Customer\Mapper\CustomerMapper::map( $customer->get_response() );
-	
+
 			update_post_meta( $data['post_id'], '_twinfield_customer_id', $customer_response->getID() );
-	
+
 			$notice->updated( 'Successful!' );
-	
+
 			echo json_encode( array(
 				'resp'    => true,
 				'id'      => $customer_response->getID(),
@@ -81,11 +81,11 @@ class Orbis_Twinfield_Plugin extends Orbis_Plugin {
 			exit;
 		} else {
 			$errors = $customer->get_response()->getErrorMessages();
-	
+
 			foreach ( $errors as $error ) {
 				$notice->error( $error );
 			}
-	
+
 			echo json_encode( array(
 				'resp'   => false,
 				'errors' => $notice->retrieve(),
