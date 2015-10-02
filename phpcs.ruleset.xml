@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<ruleset name="Stichting Opvoeden.nl">
+	<rule ref="WordPress">
+		<exclude name="Squiz.Commenting" />
+
+		<exclude name="WordPress.VIP.DirectDatabaseQuery.DirectQuery" />
+		<exclude name="WordPress.VIP.DirectDatabaseQuery.NoCaching" />
+	</rule>
+</ruleset>
