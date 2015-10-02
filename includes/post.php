@@ -26,20 +26,20 @@ add_action( 'twinfield_customer_meta_box', 'orbis_twinfield_customer_meta_box' )
 function orbis_twinfield_company_column( $column, $post_id ) {
 	switch ( $column ) {
 		case 'orbis_company_administration':
-			$id   = get_post_meta( $post_id, '_twinfield_customer_id', true );
+			$id = get_post_meta( $post_id, '_twinfield_customer_id', true );
 
 			$value = $id;
-			
+
 			if ( ! empty( $value ) ) {
-				$url = home_url( sprintf('/debiteuren/%s/', $id ) );
+				$url = home_url( sprintf( '/debiteuren/%s/', $id ) );
 
 				$value = sprintf( '<a href="%s" target="_blank">%s</a>', $url, $id );
 			}
 
 			printf(
 				'<br /><strong>%s</strong> %s',
-				__( 'Twinfield ID:', 'orbis' ),
-				$value
+				esc_html__( 'Twinfield ID:', 'orbis_twinfield' ),
+				esc_html( $value )
 			);
 
 			break;

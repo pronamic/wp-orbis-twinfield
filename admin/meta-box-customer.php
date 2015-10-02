@@ -36,23 +36,23 @@ $fields = array(
 	'addresses[1][postcode]' => $postcode,
 	'addresses[1][city]'     => $city,
 	'addresses[1][country]'  => $country,
-	'addresses[1][email]'    => $email
+	'addresses[1][email]'    => $email,
 );
 
 ?>
 <div class="jFormBuilderBox">
 	<div class="jFormBuilderBoxMessages"></div>
 
-	<?php 
-	
+	<?php
+
 	foreach ( $fields as $name => $value ) {
 		printf( '<input type="hidden" name="%s" value="%s" />', esc_attr( $name ), esc_attr( $value ) );
 	}
-	
+
 	?>
 
 	<div>
-		<input type="submit" value="<?php _e( 'Synchronize', 'orbis_twinfield' ); ?>" class="button" />
+		<input type="submit" value="<?php esc_attr_e( 'Synchronize', 'orbis_twinfield' ); ?>" class="button" />
 
 		<div class="spinner"></div>
 	</div>
