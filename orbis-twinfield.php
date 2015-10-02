@@ -19,10 +19,11 @@ GitHub URI: https://github.com/pronamic/wp-orbis-twinfield
 */
 
 function orbis_twinfield_bootstrap() {
+	include 'classes/orbis-twinfield-admin.php';
 	include 'classes/orbis-twinfield-plugin.php';
 
 	global $orbis_twinfield_plugin;
-	
+
 	$orbis_twinfield_plugin = new Orbis_Twinfield_Plugin( __FILE__ );
 }
 

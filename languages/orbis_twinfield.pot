@@ -1,35 +1,85 @@
-# Copyright (C) 2014 Orbis Twinfield
-# This file is distributed under the same license as the Orbis Twinfield package.
+# Copyright (C) 2015 Pronamic
+# This file is distributed under the Copyright (c) Pronamic.
 msgid ""
 msgstr ""
 "Project-Id-Version: Orbis Twinfield 1.0.0\n"
-"Report-Msgid-Bugs-To: http://wordpress.org/tag/orbis-twinfield\n"
-"POT-Creation-Date: 2014-01-02 09:53:25+00:00\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/orbis-twinfield\n"
+"POT-Creation-Date: 2015-10-02 11:39:48+00:00\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2014-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2015-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"X-Generator: grunt-wp-i18n 0.5.3\n"
 
 #: admin/meta-box-customer.php:55
 msgid "Synchronize"
 msgstr ""
 
-#: includes/post.php:40
-msgid "Twinfield ID:"
+#: admin/page-orbis-twinfield.php:49
+msgid "Invoice created by Orbis on %s."
 msgstr ""
 
+#: admin/page-orbis-twinfield.php:65
+msgid "Customer"
+msgstr ""
+
+#: admin/page-orbis-twinfield.php:74
+msgid "ID"
+msgstr ""
+
+#: admin/page-orbis-twinfield.php:75
+msgid "Subscription"
+msgstr ""
+
+#: admin/page-orbis-twinfield.php:76
+msgid "Price"
+msgstr ""
+
+#: admin/page-orbis-twinfield.php:77
+msgid "Name"
+msgstr ""
+
+#: admin/page-orbis-twinfield.php:78
+msgid "Start Date"
+msgstr ""
+
+#: admin/page-orbis-twinfield.php:79
+msgid "End Date"
+msgstr ""
+
+#: admin/page-orbis-twinfield.php:80 classes/orbis-twinfield-admin.php:52
 #: templates/company-twinfield.php:11
 msgid "Twinfield"
 msgstr ""
 
-#: templates/company-twinfield.php:16
-msgid "Twinfield ID"
+#: admin/page-orbis-twinfield.php:128
+msgid "Orbis ID: %s"
+msgstr ""
+
+#: admin/page-orbis-twinfield.php:162
+msgid "Article"
+msgstr ""
+
+#: admin/page-orbis-twinfield.php:170
+msgid "Subarticle"
+msgstr ""
+
+#: admin/page-orbis-twinfield.php:221
+msgid "Create Invoice"
 msgstr ""
 
 #. Plugin Name of the plugin/theme
 msgid "Orbis Twinfield"
+msgstr ""
+
+#: includes/post.php:41
+msgid "Twinfield ID:"
+msgstr ""
+
+#: templates/company-twinfield.php:16
+msgid "Twinfield ID"
 msgstr ""
 
 #. Plugin URI of the plugin/theme

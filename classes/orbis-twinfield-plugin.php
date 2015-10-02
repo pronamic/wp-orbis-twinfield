@@ -17,6 +17,15 @@ class Orbis_Twinfield_Plugin extends Orbis_Plugin {
 	public function __construct( $file ) {
 		parent::__construct( $file );
 
+		$this->set_name( 'orbis_twinfield' );
+		$this->set_db_version( '1.0.0' );
+
+		// Admin
+		if ( is_admin() ) {
+			$this->admin = new Orbis_Twinfield_Admin( $this );
+		}
+
+		// Includes
 		$this->plugin_include( 'includes/post.php' );
 		$this->plugin_include( 'includes/template.php' );
 
@@ -72,7 +81,7 @@ class Orbis_Twinfield_Plugin extends Orbis_Plugin {
 
 			$notice->updated( 'Successful!' );
 
-			echo json_encode( array(
+			echo wp_json_encode( array(
 				'resp'    => true,
 				'id'      => $customer_response->getID(),
 				'message' => $notice->retrieve(),
@@ -86,7 +95,7 @@ class Orbis_Twinfield_Plugin extends Orbis_Plugin {
 				$notice->error( $error );
 			}
 
-			echo json_encode( array(
+			echo wp_json_encode( array(
 				'resp'   => false,
 				'errors' => $notice->retrieve(),
 			) );
