@@ -113,7 +113,7 @@ $date = array(
 							$line = $sales_invoice->new_line();
 							$line->set_article( $twinfield_article_code );
 							$line->set_subarticle( $twinfield_subarticle_code );
-							$line->set_description( $result->subscription_name );
+							//$line->set_description( $result->subscription_name );
 							$line->set_value_excl( (float) $result->price );
 							$line->set_free_text_1( $result->name );
 							$line->set_free_text_2( sprintf(
@@ -167,7 +167,7 @@ $date = array(
 
 									echo '<br />';
 
-									if ( ! empty( $twinfield_article_code ) ) {
+									if ( ! empty( $twinfield_subarticle_code ) ) {
 										printf(
 											'<strong>%s</strong>: %s',
 											esc_html__( 'Subarticle', 'orbis_twinfield' ),
