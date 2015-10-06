@@ -1,5 +1,19 @@
 <?php
 
+// Date
+$date = date_parse( filter_input( INPUT_GET, 'date', FILTER_SANITIZE_STRING ) );
+
+if ( ! $date['year'] ) {
+    $date['year'] = date( 'Y' );
+}
+
+if ( ! $date['month'] ) {
+    $date['month'] = date( 'm' );
+}
+
+$date_string = '01-' . $date['month'] . '-' . $date['year'];
+
+// Subscriptions
 $subscriptions = $this->get_subscriptions();
 
 $companies = array();
@@ -20,16 +34,50 @@ foreach ( $subscriptions as $subscription ) {
 	$companies[ $company_id ]->subscriptions[] = $subscription;
 }
 
-$interval = 'Y';
-
-$date = array(
-	'year'  => date( 'Y' ),
-	'month' => date( 'm' )
-);
+$interval = filter_input( INPUT_GET, 'interval', FILTER_SANITIZE_STRING );
 
 ?>
 <div class="wrap">
 	<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
+
+	<ul class="subsubsub">
+		<li>
+			<?php echo esc_html( date_i18n( 'M Y', strtotime( $date_string ) ) ); ?> |
+		</li>
+		<li>
+			<a href="<?php echo esc_attr( remove_query_arg( array( 'date' ) ) ); ?>" class="btn btn-default"><?php _e( 'This month', 'orbis_twinfield' ); ?></a>
+		</li>
+	</ul>
+
+	<form method="get">
+		<div class="tablenav top">
+			<div class="alignleft actions bulkactions">
+				<select name="interval">
+					<option value="-1" selected="selected"><?php esc_html_e( 'Interval', 'orbis_twinfield' ); ?></option>
+					<option value="Y" <?php selected( $interval, 'Y' ); ?>><?php _e( 'Yearly', 'orbis_twinfield' ); ?></option>
+					<option value="M" <?php selected( $interval, 'M' ); ?>><?php _e( 'Monthly', 'orbis_twinfield' ); ?></option>
+				</select>
+
+				<input type="hidden" name="post_type" value="orbis_subscription" />
+				<input type="hidden" name="page" value="orbis_twinfield" />
+				<input type="submit" class="button action" name="test" value="<?php esc_attr_e( 'Execute', 'orbis_twinfield' ); ?>" />
+			</div>
+
+			<div class="tablenav-pages">
+				<span class="pagination-links">
+					<a class="prev-page" href="<?php echo esc_attr( add_query_arg( array( 'date' => date( 'd-m-Y', strtotime( $date_string . ' - 1 month' ) ) ) ) ); ?>">
+						<span class="screen-reader-text">Vorige pagina</span><span aria-hidden="true">‹</span>
+					</a>
+
+					<a class="next-page" href="<?php echo esc_attr( add_query_arg( array( 'date' => date( 'd-m-Y', strtotime( $date_string . ' + 1 month' ) ) ) ) ); ?>">
+						<span class="screen-reader-text">Volgende pagina</span><span aria-hidden="true">›</span>
+					</a>
+				</span>
+
+				
+			</div>
+		</div>
+	</form>
 
 	<?php foreach ( $companies as $company ) : ?>
 
@@ -121,10 +169,7 @@ $date = array(
 								date_i18n( 'D j M Y', $date_start->getTimestamp() ),
 								date_i18n( 'D j M Y', $date_end->getTimestamp() )
 							) );
-							$line->set_free_text_3( sprintf(
-								__( 'Orbis ID: %s', 'orbis_twinfield' ),
-								$result->id
-							) );
+							$line->set_free_text_3( $result->id );
 
 							$register_invoices[] = (object) array(
 								'post_id'    => $result->post_id,
@@ -210,16 +255,31 @@ $date = array(
 
 						$response = $service->insert_sales_invoice( $sales_invoice );
 
-						if ( $response && $response->is_successful() ) {
-							$sales_invoice = $response->get_sales_invoice();
+						if ( $response ) {
+							if ( $response->is_successful() ) {
+								$sales_invoice = $response->get_sales_invoice();
 
-							$number = $sales_invoice->get_header()->get_number();
+								$number = $sales_invoice->get_header()->get_number();
 
-							foreach ( $register_invoices as $object ) {
-								$subscription = new Orbis_Subscription( $object->post_id );
+								foreach ( $register_invoices as $object ) {
+									$subscription = new Orbis_Subscription( $object->post_id );
 
-								$result = $subscription->register_invoice( $number, $object->start_date, $object->end_date );
+									$result = $subscription->register_invoice( $number, $object->start_date, $object->end_date );
+								}
+							} else {
+								$xml = new DOMDocument();
+								$xml->loadXML( $response->get_message()->asXML() );
+
+								$xsl = new DOMDocument;
+								$xsl->load( plugin_dir_path( $this->plugin->file ) . '/admin/twinfield-salesinvoices.xsl' );
+
+								$proc = new XSLTProcessor;
+								$proc->importStyleSheet( $xsl );
+
+								echo $proc->transformToXML( $xml );
 							}
+						} else {
+							esc_html_e( 'No response from Twinfield.', 'orbis_twinfield' );
 						}
 					}
 
