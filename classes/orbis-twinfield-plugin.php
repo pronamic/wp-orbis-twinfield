@@ -30,9 +30,7 @@ class Orbis_Twinfield_Plugin extends Orbis_Plugin {
 		$this->plugin_include( 'includes/template.php' );
 
 		// Actions
-		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
-
-		add_action( 'wp_ajax_orbis_twinfield_synchronize', array( $this, 'ajax_twinfield_syncrhonize' ) );
+		add_action( 'twinfield_post_customer', array( $this, 'twinfield_post_customer' ), 20, 2 );
 	}
 
 	//////////////////////////////////////////////////
@@ -47,60 +45,39 @@ class Orbis_Twinfield_Plugin extends Orbis_Plugin {
 	//////////////////////////////////////////////////
 
 	/**
-	 * Admin enqueue scripts
+	 * Twinfield post customer
+	 *
+	 * @param Customer $customer
+	 * @param int      $post_id
 	 */
-	public function admin_enqueue_scripts() {
-		wp_register_script( 'orbis-twinfield-admin', $this->plugin_url( 'assets/admin.js' ), array( 'jquery' ) );
+	public function twinfield_post_customer( $customer, $post_id ) {
+		if ( 'orbis_company' === get_post_type( $post_id ) ) {
+			$customer->set_name( get_the_title( $post_id ) );
+			// $customer->set_webiste( get_post_meta( $post->ID, '_orbis_company_website', true ) );
 
-		wp_enqueue_script( 'orbis-twinfield-admin' );
-	}
+			$address = $customer->new_address();
+			$address->set_default( true );
+			$address->set_type( \Pronamic\WP\Twinfield\AddressTypes::INVOICE );
+			$address->set_name( get_the_title( $post_id ) );
+			$address->set_field_2( get_post_meta( $post_id, '_orbis_company_address', true ) );
+			$address->set_postcode( get_post_meta( $post_id, '_orbis_company_postcode', true ) );
+			$address->set_city( get_post_meta( $post_id, '_orbis_company_city', true ) );
+			$address->set_country( get_post_meta( $post_id, '_orbis_company_country', true ) );
+			$address->set_email( get_post_meta( $post_id, '_orbis_company_email', true ) );
+			$address->set_field_4( get_post_meta( $post_id, '_orbis_company_vat_number', true ) );
+			$address->set_field_5( get_post_meta( $post_id, '_orbis_company_kvk_number', true ) );
 
-	//////////////////////////////////////////////////
+			$financials = $customer->get_financials();
+			$financials->set_due_days( 14 );
+			// $financials->set_ebilling( get_post_meta( $post->ID, '_orbis_company_ebilling', true ) );
+			// $financials->set_ebillmail( get_post_meta( $post_id, '_orbis_company_email', true ) );
+			// $financials->set_vat_code( get_option( 'twinfield_default_vat_code' ) );
 
-	/**
-	 * AJAX Twinfield synchronize
-	 */
-	function ajax_twinfield_syncrhonize() {
-		$customer = new \Pronamic\WP\Twinfield\FormBuilder\Form\Customer();
-
-		$data = $_POST;
-		if ( empty( $data['id'] ) ) {
-			$customer->prepare_extra_variables();
-
-			$extra = $customer->get_extra_variables();
-
-			$data['id'] = $extra['latest_customer_id'];
+			$credit_management = $customer->get_credit_management();
+			$credit_management->set_send_reminder( 'email' );
+			$credit_management->set_reminder_email( get_post_meta( $post_id, '_orbis_company_email', true ) );
 		}
 
-		$notice = new \ZFramework\Util\Notice();
-
-		if ( $customer->submit( $data ) ) {
-			$customer_response = Pronamic\Twinfield\Customer\Mapper\CustomerMapper::map( $customer->get_response() );
-
-			update_post_meta( $data['post_id'], '_twinfield_customer_id', $customer_response->getID() );
-
-			$notice->updated( 'Successful!' );
-
-			echo wp_json_encode( array(
-				'resp'    => true,
-				'id'      => $customer_response->getID(),
-				'message' => $notice->retrieve(),
-			) );
-
-			exit;
-		} else {
-			$errors = $customer->get_response()->getErrorMessages();
-
-			foreach ( $errors as $error ) {
-				$notice->error( $error );
-			}
-
-			echo wp_json_encode( array(
-				'resp'   => false,
-				'errors' => $notice->retrieve(),
-			) );
-
-			exit;
-		}
+		return $customer;
 	}
 }
