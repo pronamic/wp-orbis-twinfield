@@ -30,6 +30,7 @@ class Orbis_Twinfield_Plugin extends Orbis_Plugin {
 		$this->plugin_include( 'includes/template.php' );
 
 		// Actions
+		add_action( 'init', array( $this, 'init' ) );
 		add_action( 'twinfield_post_customer', array( $this, 'twinfield_post_customer' ), 20, 2 );
 	}
 
@@ -40,6 +41,15 @@ class Orbis_Twinfield_Plugin extends Orbis_Plugin {
 	 */
 	public function loaded() {
 		$this->load_textdomain( 'orbis_twinfield', '/languages/' );
+	}
+
+	/**
+	 * Initialize.
+	 */
+	function init() {
+		add_post_type_support( 'orbis_company', 'twinfield_customer' );
+		add_post_type_support( 'orbis_subs_product', 'twinfield_article' );
+		add_post_type_support( 'orbis_subscription', 'twinfield_invoiceable' );
 	}
 
 	//////////////////////////////////////////////////

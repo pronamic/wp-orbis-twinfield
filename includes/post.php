@@ -1,23 +1,5 @@
 <?php
 
-function orbis_twinfield_init() {
-	global $orbis_twinfield_plugin;
-
-	add_post_type_support( 'orbis_company', 'twinfield_customer' );
-	add_post_type_support( 'orbis_subs_product', 'twinfield_article' );
-	add_post_type_support( 'orbis_subscription', 'twinfield_invoiceable' );
-}
-
-add_action( 'init', 'orbis_twinfield_init' );
-
-function orbis_twinfield_customer_meta_box() {
-	global $orbis_twinfield_plugin;
-
-	$orbis_twinfield_plugin->plugin_include( 'admin/meta-box-customer.php' );
-}
-
-add_action( 'twinfield_customer_meta_box', 'orbis_twinfield_customer_meta_box' );
-
 /**
  * Company column
  *
