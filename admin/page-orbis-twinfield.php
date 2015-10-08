@@ -4,11 +4,11 @@
 $date = date_parse( filter_input( INPUT_GET, 'date', FILTER_SANITIZE_STRING ) );
 
 if ( ! $date['year'] ) {
-    $date['year'] = date( 'Y' );
+	$date['year'] = date( 'Y' );
 }
 
 if ( ! $date['month'] ) {
-    $date['month'] = date( 'm' );
+	$date['month'] = date( 'm' );
 }
 
 $date_string = '01-' . $date['month'] . '-' . $date['year'];
@@ -45,7 +45,7 @@ $interval = filter_input( INPUT_GET, 'interval', FILTER_SANITIZE_STRING );
 			<?php echo esc_html( date_i18n( 'M Y', strtotime( $date_string ) ) ); ?> |
 		</li>
 		<li>
-			<a href="<?php echo esc_attr( remove_query_arg( array( 'date' ) ) ); ?>" class="btn btn-default"><?php _e( 'This month', 'orbis_twinfield' ); ?></a>
+			<a href="<?php echo esc_attr( remove_query_arg( array( 'date' ) ) ); ?>" class="btn btn-default"><?php esc_html_e( 'This month', 'orbis_twinfield' ); ?></a>
 		</li>
 	</ul>
 
@@ -54,8 +54,8 @@ $interval = filter_input( INPUT_GET, 'interval', FILTER_SANITIZE_STRING );
 			<div class="alignleft actions bulkactions">
 				<select name="interval">
 					<option value="-1" selected="selected"><?php esc_html_e( 'Interval', 'orbis_twinfield' ); ?></option>
-					<option value="Y" <?php selected( $interval, 'Y' ); ?>><?php _e( 'Yearly', 'orbis_twinfield' ); ?></option>
-					<option value="M" <?php selected( $interval, 'M' ); ?>><?php _e( 'Monthly', 'orbis_twinfield' ); ?></option>
+					<option value="Y" <?php selected( $interval, 'Y' ); ?>><?php esc_html_e( 'Yearly', 'orbis_twinfield' ); ?></option>
+					<option value="M" <?php selected( $interval, 'M' ); ?>><?php esc_html_e( 'Monthly', 'orbis_twinfield' ); ?></option>
 				</select>
 
 				<input type="hidden" name="post_type" value="orbis_subscription" />
@@ -276,7 +276,7 @@ $interval = filter_input( INPUT_GET, 'interval', FILTER_SANITIZE_STRING );
 								$proc = new XSLTProcessor;
 								$proc->importStyleSheet( $xsl );
 
-								echo $proc->transformToXML( $xml );
+								echo $proc->transformToXML( $xml ); //xss ok
 							}
 						} else {
 							esc_html_e( 'No response from Twinfield.', 'orbis_twinfield' );
