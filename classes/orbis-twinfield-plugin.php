@@ -26,7 +26,6 @@ class Orbis_Twinfield_Plugin extends Orbis_Plugin {
 		}
 
 		// Includes
-		$this->plugin_include( 'includes/post.php' );
 		$this->plugin_include( 'includes/template.php' );
 
 		// Actions

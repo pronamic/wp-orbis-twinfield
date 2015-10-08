@@ -29,6 +29,9 @@ class Orbis_Twinfield_Admin {
 		// Actions
 		add_action( 'admin_init', array( $this, 'admin_init' ) );
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
+
+		add_action( 'manage_posts_custom_column' , array( $this, 'manage_posts_custom_column' ), 20, 2 );
+
 	}
 
 	//////////////////////////////////////////////////
@@ -61,6 +64,32 @@ class Orbis_Twinfield_Admin {
 	 */
 	public function page_orbis_twinfield() {
 		include plugin_dir_path( $this->plugin->file ) . 'admin/page-orbis-twinfield.php';
+	}
+
+	/**
+	 * Manage posts custom column
+	 */
+	public function manage_posts_custom_column( $column, $post_id ) {
+		switch ( $column ) {
+			case 'orbis_company_administration':
+				$id = get_post_meta( $post_id, '_twinfield_customer_id', true );
+
+				$value = $id;
+
+				if ( ! empty( $value ) ) {
+					$url = home_url( sprintf( '/debiteuren/%s/', $id ) );
+
+					$value = sprintf( '<a href="%s" target="_blank">%s</a>', $url, $id );
+				}
+
+				printf(
+					'<br /><strong>%s</strong> %s',
+					esc_html__( 'Twinfield ID:', 'orbis_twinfield' ),
+					esc_html( $value )
+				);
+
+				break;
+		}
 	}
 
 	//////////////////////////////////////////////////
