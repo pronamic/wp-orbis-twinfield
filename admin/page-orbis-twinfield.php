@@ -365,13 +365,10 @@ $interval = filter_input( INPUT_GET, 'interval', FILTER_SANITIZE_STRING );
 										$result = $subscription->register_invoice( $number, $object->start_date, $object->end_date );
 									}
 								} else {
-									$xml = new DOMDocument();
-									$xml->loadXML( $response->get_message()->asXML() );
+									$xml = simplexml_load_string( $response->get_message()->asXML() );
+									$xsl = simplexml_load_file( plugin_dir_path( $this->plugin->file ) . '/admin/twinfield-salesinvoices.xsl' );
 
-									$xsl = new DOMDocument;
-									$xsl->load( plugin_dir_path( $this->plugin->file ) . '/admin/twinfield-salesinvoices.xsl' );
-
-									$proc = new XSLTProcessor;
+									$proc = new XSLTProcessor();
 									$proc->importStyleSheet( $xsl );
 
 									echo $proc->transformToXML( $xml ); // WPCS: xss ok
