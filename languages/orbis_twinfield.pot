@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Orbis Twinfield 1.0.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/orbis-twinfield\n"
-"POT-Creation-Date: 2015-10-08 11:13:17+00:00\n"
+"POT-Creation-Date: 2015-10-16 09:31:18+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -13,77 +13,93 @@ msgstr ""
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "X-Generator: grunt-wp-i18n 0.5.3\n"
 
-#: admin/page-orbis-twinfield.php:48
+#: admin/page-orbis-twinfield.php:52
+msgid "Inserted"
+msgstr ""
+
+#: admin/page-orbis-twinfield.php:53
+msgid "Failed"
+msgstr ""
+
+#: admin/page-orbis-twinfield.php:95
 msgid "This month"
 msgstr ""
 
-#: admin/page-orbis-twinfield.php:56
+#: admin/page-orbis-twinfield.php:103
 msgid "Interval"
 msgstr ""
 
-#: admin/page-orbis-twinfield.php:57
+#: admin/page-orbis-twinfield.php:104
 msgid "Yearly"
 msgstr ""
 
-#: admin/page-orbis-twinfield.php:58
+#: admin/page-orbis-twinfield.php:105
 msgid "Monthly"
 msgstr ""
 
-#: admin/page-orbis-twinfield.php:63
+#: admin/page-orbis-twinfield.php:110
 msgid "Execute"
 msgstr ""
 
-#: admin/page-orbis-twinfield.php:98
+#: admin/page-orbis-twinfield.php:145
 msgid "Invoice created by Orbis on %s."
 msgstr ""
 
-#: admin/page-orbis-twinfield.php:116
+#: admin/page-orbis-twinfield.php:163
 msgid "Customer"
 msgstr ""
 
-#: admin/page-orbis-twinfield.php:125
+#: admin/page-orbis-twinfield.php:172
 msgid "ID"
 msgstr ""
 
-#: admin/page-orbis-twinfield.php:126
+#: admin/page-orbis-twinfield.php:173
 msgid "Subscription"
 msgstr ""
 
-#: admin/page-orbis-twinfield.php:127
+#: admin/page-orbis-twinfield.php:174
 msgid "Price"
 msgstr ""
 
-#: admin/page-orbis-twinfield.php:128
+#: admin/page-orbis-twinfield.php:175
 msgid "Name"
 msgstr ""
 
-#: admin/page-orbis-twinfield.php:129
+#: admin/page-orbis-twinfield.php:176
 msgid "Start Date"
 msgstr ""
 
-#: admin/page-orbis-twinfield.php:130
+#: admin/page-orbis-twinfield.php:177
 msgid "End Date"
 msgstr ""
 
-#: admin/page-orbis-twinfield.php:131 classes/orbis-twinfield-admin.php:55
+#: admin/page-orbis-twinfield.php:178 classes/orbis-twinfield-admin.php:55
 #: templates/company-twinfield.php:11
 msgid "Twinfield"
 msgstr ""
 
-#: admin/page-orbis-twinfield.php:208
+#: admin/page-orbis-twinfield.php:179
+msgid "Manual Invoice"
+msgstr ""
+
+#: admin/page-orbis-twinfield.php:197
+msgid "Create Invoice"
+msgstr ""
+
+#: admin/page-orbis-twinfield.php:209
+msgid "Register Invoices"
+msgstr ""
+
+#: admin/page-orbis-twinfield.php:293
 msgid "Article"
 msgstr ""
 
-#: admin/page-orbis-twinfield.php:218
+#: admin/page-orbis-twinfield.php:303
 msgid "Subarticle"
 msgstr ""
 
-#: admin/page-orbis-twinfield.php:282
+#: admin/page-orbis-twinfield.php:380
 msgid "No response from Twinfield."
-msgstr ""
-
-#: admin/page-orbis-twinfield.php:292
-msgid "Create Invoice"
 msgstr ""
 
 #. Plugin Name of the plugin/theme

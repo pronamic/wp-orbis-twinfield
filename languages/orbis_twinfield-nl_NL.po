@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Orbis Twinfield\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/orbis-twinfield\n"
-"POT-Creation-Date: 2015-10-08 11:13:17+00:00\n"
-"PO-Revision-Date: 2015-10-08 13:13+0100\n"
+"POT-Creation-Date: 2015-10-16 09:31:18+00:00\n"
+"PO-Revision-Date: 2015-10-16 11:31+0100\n"
 "Last-Translator: Remco Tolsma <info@remcotolsma.nl>\n"
 "Language-Team: Pronamic <info@pronamic.nl>\n"
 "Language: nl_NL\n"
@@ -15,78 +15,94 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Generator: Poedit 1.7.4\n"
 
-#: admin/page-orbis-twinfield.php:48
+#: admin/page-orbis-twinfield.php:52
+msgid "Inserted"
+msgstr "Toegevoegd"
+
+#: admin/page-orbis-twinfield.php:53
+msgid "Failed"
+msgstr "Mislukt"
+
+#: admin/page-orbis-twinfield.php:95
 msgid "This month"
 msgstr "Deze maand"
 
-#: admin/page-orbis-twinfield.php:56
+#: admin/page-orbis-twinfield.php:103
 msgid "Interval"
 msgstr "Interval"
 
-#: admin/page-orbis-twinfield.php:57
+#: admin/page-orbis-twinfield.php:104
 msgid "Yearly"
 msgstr "Jaarljks"
 
-#: admin/page-orbis-twinfield.php:58
+#: admin/page-orbis-twinfield.php:105
 msgid "Monthly"
 msgstr "Maandelijks"
 
-#: admin/page-orbis-twinfield.php:63
+#: admin/page-orbis-twinfield.php:110
 msgid "Execute"
 msgstr "Uitvoeren"
 
-#: admin/page-orbis-twinfield.php:98
+#: admin/page-orbis-twinfield.php:145
 msgid "Invoice created by Orbis on %s."
 msgstr "Factuur gemaakt door Orbis op %s."
 
-#: admin/page-orbis-twinfield.php:116
+#: admin/page-orbis-twinfield.php:163
 msgid "Customer"
 msgstr "Klant"
 
-#: admin/page-orbis-twinfield.php:125
+#: admin/page-orbis-twinfield.php:172
 msgid "ID"
 msgstr "ID"
 
-#: admin/page-orbis-twinfield.php:126
+#: admin/page-orbis-twinfield.php:173
 msgid "Subscription"
 msgstr "Abonnement"
 
-#: admin/page-orbis-twinfield.php:127
+#: admin/page-orbis-twinfield.php:174
 msgid "Price"
 msgstr "Prijs"
 
-#: admin/page-orbis-twinfield.php:128
+#: admin/page-orbis-twinfield.php:175
 msgid "Name"
 msgstr "Naam"
 
-#: admin/page-orbis-twinfield.php:129
+#: admin/page-orbis-twinfield.php:176
 msgid "Start Date"
 msgstr "Startdatum"
 
-#: admin/page-orbis-twinfield.php:130
+#: admin/page-orbis-twinfield.php:177
 msgid "End Date"
 msgstr "Einddatum"
 
-#: admin/page-orbis-twinfield.php:131 classes/orbis-twinfield-admin.php:55
+#: admin/page-orbis-twinfield.php:178 classes/orbis-twinfield-admin.php:55
 #: templates/company-twinfield.php:11
 msgid "Twinfield"
 msgstr "Twinfield"
 
-#: admin/page-orbis-twinfield.php:208
+#: admin/page-orbis-twinfield.php:179
+msgid "Manual Invoice"
+msgstr "Handmatig factureren"
+
+#: admin/page-orbis-twinfield.php:197
+msgid "Create Invoice"
+msgstr "Factuur maken"
+
+#: admin/page-orbis-twinfield.php:209
+msgid "Register Invoices"
+msgstr "Registreer facturen"
+
+#: admin/page-orbis-twinfield.php:293
 msgid "Article"
 msgstr "Artikel"
 
-#: admin/page-orbis-twinfield.php:218
+#: admin/page-orbis-twinfield.php:303
 msgid "Subarticle"
 msgstr "Subartikel"
 
-#: admin/page-orbis-twinfield.php:282
+#: admin/page-orbis-twinfield.php:380
 msgid "No response from Twinfield."
 msgstr "Geen antwoord van Twinfield."
-
-#: admin/page-orbis-twinfield.php:292
-msgid "Create Invoice"
-msgstr "Factuur maken"
 
 #. Plugin Name of the plugin/theme
 msgid "Orbis Twinfield"
@@ -192,12 +208,6 @@ msgstr "http://www.pronamic.nl/"
 
 #~ msgid "Company"
 #~ msgstr "Bedrijf"
-
-#~ msgid "Inserted"
-#~ msgstr "Toegevoegd"
-
-#~ msgid "Failed"
-#~ msgstr "Mislukt"
 
 #~ msgid "Update"
 #~ msgstr "Update"

@@ -40,7 +40,7 @@ class Orbis_Twinfield_Admin {
 	 * Admin initalize
 	 */
 	public function admin_init() {
-
+		$this->maybe_register_subscription_invoices();
 	}
 
 	//////////////////////////////////////////////////
@@ -189,5 +189,48 @@ class Orbis_Twinfield_Admin {
 		$subscriptions = $wpdb->get_results( $query ); //unprepared SQL
 
 		return $subscriptions;
+	}
+
+	/**
+	 * Maybe register subscription invoices.
+	 */
+	private function maybe_register_subscription_invoices() {
+		if ( filter_has_var( INPUT_POST, 'orbis_twinfield_register_invoices' ) ) {
+			$subscriptions = filter_input( INPUT_POST, 'subscriptions', FILTER_SANITIZE_STRING, FILTER_REQUIRE_ARRAY );
+
+			if ( ! empty( $subscriptions ) ) {
+				$failed   = array();
+				$inserted = array();
+
+				foreach ( $subscriptions as $subscription ) {
+					$id             = $subscription['id'];
+					$post_id        = $subscription['post_id'];
+					$invoice_number = $subscription['invoice_number'];
+					$date_start     = new DateTime( $subscription['date_start'] );
+					$date_end       = new DateTime( $subscription['date_end'] );
+
+					if ( ! empty( $invoice_number ) ) {
+						$subscription_object = new Orbis_Subscription( $post_id );
+
+						$result = $subscription_object->register_invoice( $invoice_number, $date_start, $date_end );
+
+						if ( false === $result ) {
+							$failed[]   = $post_id;
+						} else {
+							$inserted[] = $post_id;
+						}
+					}
+				}
+
+				$url = add_query_arg( array(
+					'inserted' => empty( $inserted ) ? false : implode( $inserted, ',' ),
+					'failed'   => empty( $failed ) ? false : implode( $failed, ',' ),
+				) );
+
+				wp_redirect( $url );
+
+				exit;
+			}
+		}
 	}
 }
