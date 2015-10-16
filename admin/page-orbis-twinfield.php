@@ -182,7 +182,22 @@ $interval = filter_input( INPUT_GET, 'interval', FILTER_SANITIZE_STRING );
 
 					<tfoot>
 						<tr>
-							<td colspan="6">
+							<td colspan="2">
+
+							</td>
+							<td>
+								<?php
+
+								$total = 0;
+								foreach ( $company->subscriptions as $i => $result ) {
+									$total += $result->price;
+								}
+
+								echo esc_html( orbis_price( $total ) );
+
+								?>
+							</td>
+							<td colspan="3">
 
 							</td>
 							<td>
