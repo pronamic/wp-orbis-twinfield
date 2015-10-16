@@ -62,8 +62,9 @@ $interval = filter_input( INPUT_GET, 'interval', FILTER_SANITIZE_STRING );
 				echo '<h3>', esc_html( $label ), '</h3>';
 
 				$subscriptions = get_posts( array(
-					'post_type' => 'any',
-					'post__in'  => $ids,
+					'post_type'      => 'any',
+					'post__in'       => $ids,
+					'posts_per_page' => 50,
 				) );
 
 				if ( ! empty( $subscriptions ) ) {
