@@ -380,6 +380,8 @@ $interval = filter_input( INPUT_GET, 'interval', FILTER_SANITIZE_STRING );
 
 										$result = $subscription->register_invoice( $number, $object->start_date, $object->end_date );
 									}
+
+									esc_html_e( 'Twinfield invoice created.', 'orbis_twinfield' );
 								} else {
 									$xml = simplexml_load_string( $response->get_message()->asXML() );
 									$xsl = simplexml_load_file( plugin_dir_path( $this->plugin->file ) . '/admin/twinfield-salesinvoices.xsl' );
