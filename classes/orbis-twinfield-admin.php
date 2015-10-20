@@ -95,39 +95,70 @@ class Orbis_Twinfield_Admin {
 	//////////////////////////////////////////////////
 
 	/**
+	 * Get the date.
+	 *
+	 * @return DateTime
+	 */
+	public function get_date() {
+		$date_string = filter_input( INPUT_GET, 'date', FILTER_SANITIZE_STRING );
+
+		$date = date_create( $date_string );
+
+		if ( empty( $date_string ) || false === $date ) {
+			$date = new DateTime( 'first day of this month' );
+		}
+
+		return $date;
+	}
+
+	/**
+	 * Get the interval.
+	 *
+	 * @return string
+	 */
+	public function get_interval() {
+		$interval = filter_input( INPUT_GET, 'interval', FILTER_SANITIZE_STRING );
+
+		$interval = empty( $interval ) ? 'Y' : $interval;
+
+		return $interval;
+	}
+
+	/**
 	 * Get subscriptions
 	 */
 	public function get_subscriptions() {
 		global $wpdb;
 		global $orbis_subscriptions_plugin;
 
-		$date = strtotime( filter_input( INPUT_GET, 'date', FILTER_SANITIZE_STRING ) );
-		if ( false === $date ) {
-			$date = time();
-		}
+		// Date
+		$date = $this->get_date();
 
 		// Interval
-		$interval = filter_input( INPUT_GET, 'interval', FILTER_SANITIZE_STRING );
-		$interval = empty( $interval ) ? 'Y' : $interval;
+		$interval = $this->get_interval();
 
+		// Query
 		switch ( $interval ) {
 			case 'M' :
+				$last_day_month = clone $date;
+				$last_day_month->modify( 'last day of this month' );
+
 				$day_function    = 'DAYOFMONTH';
-				$join_condition  = $wpdb->prepare( '( YEAR( invoice.start_date ) = %d AND MONTH( invoice.start_date ) = %d )', date( 'Y', $date ), date( 'n', $date ) );
-				$where_condition = $wpdb->prepare( 'subscription.activation_date <= %s', date( 'Y-m-d', $date ) );
+				$join_condition  = $wpdb->prepare( '( YEAR( invoice.start_date ) = %d AND MONTH( invoice.start_date ) = %d )', $date->format( 'Y' ), $date->format( 'n' ) );
+				$where_condition = $wpdb->prepare( 'subscription.activation_date <= %s', $last_day_month->format( 'Y-m-d' ) );
 
 				break;
 			case 'Y' :
 			default:
 				$day_function    = 'DAYOFYEAR';
-				$join_condition  = $wpdb->prepare( 'YEAR( invoice.start_date ) = %d', date( 'Y', $date ) );
+				$join_condition  = $wpdb->prepare( 'YEAR( invoice.start_date ) = %d', $date->format( 'Y' ) );
 				$where_condition = $wpdb->prepare( '
 					(
 						YEAR( subscription.activation_date ) <= %d
 							AND 
 						MONTH( subscription.activation_date ) < ( MONTH( NOW() ) + 2 )
 					)',
-					date( 'Y', $date )
+					$date->format( 'Y' )
 				);
 				break;
 		}

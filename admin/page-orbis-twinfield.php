@@ -7,17 +7,10 @@ $action_url = add_query_arg( array(
 ), admin_url( 'edit.php' ) );
 
 // Date
-$date = date_parse( filter_input( INPUT_GET, 'date', FILTER_SANITIZE_STRING ) );
+$date = $this->get_date();
 
-if ( ! $date['year'] ) {
-	$date['year'] = date( 'Y' );
-}
-
-if ( ! $date['month'] ) {
-	$date['month'] = date( 'm' );
-}
-
-$date_string = '01-' . $date['month'] . '-' . $date['year'];
+// Interval
+$interval = $this->get_interval();
 
 // Subscriptions
 $subscriptions = $this->get_subscriptions();
@@ -39,8 +32,6 @@ foreach ( $subscriptions as $subscription ) {
 
 	$companies[ $company_id ]->subscriptions[] = $subscription;
 }
-
-$interval = filter_input( INPUT_GET, 'interval', FILTER_SANITIZE_STRING );
 
 ?>
 <div class="wrap">
@@ -90,10 +81,12 @@ $interval = filter_input( INPUT_GET, 'interval', FILTER_SANITIZE_STRING );
 
 	<ul class="subsubsub">
 		<li>
-			<?php echo esc_html( date_i18n( 'M Y', strtotime( $date_string ) ) ); ?> |
+			<?php echo esc_html( date_i18n( 'M Y', $date->getTimestamp() ) ); ?> |
 		</li>
 		<li>
-			<a href="<?php echo esc_attr( remove_query_arg( array( 'date' ) ) ); ?>" class="btn btn-default"><?php esc_html_e( 'This month', 'orbis_twinfield' ); ?></a>
+			<a href="<?php echo esc_attr( remove_query_arg( 'date' ) ); ?>" class="btn btn-default">
+				<?php esc_html_e( 'This month', 'orbis_twinfield' ); ?>
+			</a>
 		</li>
 	</ul>
 
@@ -108,16 +101,30 @@ $interval = filter_input( INPUT_GET, 'interval', FILTER_SANITIZE_STRING );
 
 				<input type="hidden" name="post_type" value="orbis_subscription" />
 				<input type="hidden" name="page" value="orbis_twinfield" />
-				<input type="submit" class="button action" name="test" value="<?php esc_attr_e( 'Execute', 'orbis_twinfield' ); ?>" />
+
+				<input type="submit" class="button action" name="action" value="<?php esc_attr_e( 'Execute', 'orbis_twinfield' ); ?>" />
 			</div>
 
 			<div class="tablenav-pages">
 				<span class="pagination-links">
-					<a class="prev-page" href="<?php echo esc_attr( add_query_arg( array( 'date' => date( 'd-m-Y', strtotime( $date_string . ' - 1 month' ) ) ) ) ); ?>">
+					<?php
+
+					$date_prev = clone $date;
+					$date_prev->modify( '-1 month' );
+
+					$link_prev = add_query_arg( 'date', $date_prev->format( 'd-m-Y' ) );
+
+					$date_next = clone $date;
+					$date_next->modify( '+1 month' );
+
+					$link_next = add_query_arg( 'date', $date_next->format( 'd-m-Y' ) );
+
+					?>
+					<a class="prev-page" href="<?php echo esc_attr( $link_prev ); ?>">
 						<span class="screen-reader-text">Vorige pagina</span><span aria-hidden="true">‹</span>
 					</a>
 
-					<a class="next-page" href="<?php echo esc_attr( add_query_arg( array( 'date' => date( 'd-m-Y', strtotime( $date_string . ' + 1 month' ) ) ) ) ); ?>">
+					<a class="next-page" href="<?php echo esc_attr( $link_next ); ?>">
 						<span class="screen-reader-text">Volgende pagina</span><span aria-hidden="true">›</span>
 					</a>
 				</span>
@@ -243,18 +250,29 @@ $interval = filter_input( INPUT_GET, 'interval', FILTER_SANITIZE_STRING );
 
 							$date_start = new DateTime( $result->activation_date );
 							$date_end   = new DateTime( $result->activation_date );
+
 							$day   = $date_start->format( 'd' );
-							$month = $date_start->format( 'm' );
-							if ( $result->interval === 'Y' ) {
-								$date_start->setDate( $date['year'], $month, $day );
-								$date_end_timestamp = strtotime( $date['year'] . '-' . $month . '-' . $day . ' + 1 year' );
-							} else if ( $result->interval === 'M' ) {
-								$date_start->setDate( $date['year'], $date['month'], $day );
-								$date_end_timestamp = strtotime( $date['year'] . '-' . $date['month'] . '-' . $day . ' + 1 month' );
-							} else {
-								$date_end_timestamp = strtotime( $date_string );
+							$month = $date_start->format( 'n' );
+
+							switch ( $result->interval ) {
+								// Month
+								case 'M' : 
+									$date_start->setDate( $date->format( 'Y' ), $date->format( 'n' ), $day );
+
+									$date_end = clone $date_start;
+									$date_end->modify( '+1 month' );
+
+									break;
+								// Year
+								case 'Y' :
+								default : 
+									$date_start->setDate( $date->format( 'Y' ), $month, $day );
+
+									$date_end = clone $date_start;
+									$date_end->modify( '+1 year' );
+
+									break;
 							}
-							$date_end->setDate( date( 'Y', $date_end_timestamp ), date( 'm', $date_end_timestamp ), $day );
 
 							$twinfield_article_code    = get_post_meta( $result->product_post_id, '_twinfield_article_code', true );
 							$twinfield_subarticle_code = get_post_meta( $result->product_post_id, '_twinfield_subarticle_code', true );
