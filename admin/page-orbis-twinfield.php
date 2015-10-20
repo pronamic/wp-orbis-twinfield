@@ -1,16 +1,18 @@
 <?php
 
-// Action URL
-$action_url = add_query_arg( array(
-	'post_type' => 'orbis_subscription',
-	'page'      => 'orbis_twinfield',
-), admin_url( 'edit.php' ) );
-
 // Date
 $date = $this->get_date();
 
 // Interval
 $interval = $this->get_interval();
+
+// Action URL
+$action_url = add_query_arg( array(
+	'post_type' => 'orbis_subscription',
+	'page'      => 'orbis_twinfield',
+	'date'      => $date->format( 'd-m-Y' ),
+	'interval'  => $interval,
+), admin_url( 'edit.php' ) );
 
 // Subscriptions
 $subscriptions = $this->get_subscriptions();
