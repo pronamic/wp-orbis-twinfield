@@ -150,16 +150,12 @@ class Orbis_Twinfield_Admin {
 				break;
 			case 'Y' :
 			default:
+				$ahead_limit = new DateTime( '+2 month' );
+
 				$day_function    = 'DAYOFYEAR';
 				$join_condition  = $wpdb->prepare( 'YEAR( invoice.start_date ) = %d', $date->format( 'Y' ) );
-				$where_condition = $wpdb->prepare( '
-					(
-						YEAR( subscription.activation_date ) <= %d
-							AND 
-						MONTH( subscription.activation_date ) < ( MONTH( NOW() ) + 2 )
-					)',
-					$date->format( 'Y' )
-				);
+				$where_condition = $wpdb->prepare( 'DATE_FORMAT( subscription.activation_date, %s ) <= %s', date( 'Y' ) . '-%m-%d', $ahead_limit->format( 'Y-m-d' ) );
+
 				break;
 		}
 
