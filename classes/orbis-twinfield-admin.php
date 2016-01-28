@@ -154,7 +154,7 @@ class Orbis_Twinfield_Admin {
 
 				$day_function    = 'DAYOFYEAR';
 				$join_condition  = $wpdb->prepare( 'YEAR( invoice.start_date ) = %d', $date->format( 'Y' ) );
-				$where_condition = $wpdb->prepare( 'DATE_FORMAT( subscription.activation_date, %s ) <= %s', date( 'Y' ) . '-%m-%d', $ahead_limit->format( 'Y-m-d' ) );
+				$where_condition = $wpdb->prepare( 'DATE_FORMAT( subscription.activation_date, %s ) <= %s', $date->format( 'Y' ) . '-%m-%d', $ahead_limit->format( 'Y-m-d' ) );
 
 				break;
 		}
