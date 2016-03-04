@@ -163,7 +163,8 @@ class Orbis_Twinfield_Admin {
 
 				$day_function = 'DAYOFYEAR';
 
-				$join_condition  .= $wpdb->prepare( 'YEAR( invoice.start_date ) = %d', $date->format( 'Y' ) );
+				// Check if the end date of invoice is in next year.
+				$join_condition  .= $wpdb->prepare( 'YEAR( invoice.end_date ) = %d', $date->format( 'Y' ) + 1 );
 
 				$where_condition .= $wpdb->prepare( 'subscription.activation_date <= %s', $last_day_month->format( 'Y-m-d' ) );
 				$where_condition .= ' AND ';
