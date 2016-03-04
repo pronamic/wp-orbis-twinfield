@@ -154,6 +154,10 @@ class Orbis_Twinfield_Admin {
 				$where_condition .= $wpdb->prepare( 'subscription.activation_date <= %s', $last_day_month->format( 'Y-m-d' ) );
 
 				break;
+			case 'Q' :
+
+
+				break;
 			case 'Y' :
 			default :
 				$last_day_month = clone $date;
