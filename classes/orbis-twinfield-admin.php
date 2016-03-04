@@ -155,7 +155,7 @@ class Orbis_Twinfield_Admin {
 
 				break;
 			case 'Y' :
-			default:
+			default :
 				$last_day_month = clone $date;
 				$last_day_month->modify( 'last day of this month' );
 
