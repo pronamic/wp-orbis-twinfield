@@ -155,7 +155,14 @@ class Orbis_Twinfield_Admin {
 
 				break;
 			case 'Q' :
+				$last_day_month = clone $date;
+				$last_day_month->modify( 'last day of this quarter' );
 
+				$day_function = 'DAYOFYEAR';
+
+				$join_condition  .= $wpdb->prepare( '( YEAR( invoice.start_date ) = %d AND MONTH( invoice.start_date ) = %d )', $date->format( 'Y' ), $date->format( 'n' ) );
+
+				$where_condition .= $wpdb->prepare( 'subscription.activation_date <= %s', $last_day_month->format( 'Y-m-d' ) );
 
 				break;
 			case 'Y' :
@@ -194,6 +201,7 @@ class Orbis_Twinfield_Admin {
 				subscription.post_id,
 				subscription.name,
 				subscription.activation_date,
+				subscription.expiration_date,
 				DAYOFYEAR( subscription.activation_date ) AS activation_dayofyear,
 				invoice.invoice_number,
 				invoice.start_date,

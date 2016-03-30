@@ -98,6 +98,7 @@ foreach ( $subscriptions as $subscription ) {
 				<select name="interval">
 					<option value="-1" selected="selected"><?php esc_html_e( 'Interval', 'orbis_twinfield' ); ?></option>
 					<option value="Y" <?php selected( $interval, 'Y' ); ?>><?php esc_html_e( 'Yearly', 'orbis_twinfield' ); ?></option>
+					<option value="Q" <?php selected( $interval, 'Q' ); ?>><?php esc_html_e( 'Quarterly', 'orbis_twinfield' ); ?></option>
 					<option value="M" <?php selected( $interval, 'M' ); ?>><?php esc_html_e( 'Monthly', 'orbis_twinfield' ); ?></option>
 				</select>
 
@@ -263,6 +264,14 @@ foreach ( $subscriptions as $subscription ) {
 
 									$date_end = clone $date_start;
 									$date_end->modify( '+1 month' );
+
+									break;
+								// Quarter
+								case 'Q' :
+									$date_start = new DateTime( $result->expiration_date );
+									
+									$date_end   = new DateTime( $result->expiration_date );
+									$date_end->modify( '+3 month' );
 
 									break;
 								// Year
