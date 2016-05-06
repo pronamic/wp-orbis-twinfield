@@ -293,7 +293,14 @@ foreach ( $subscriptions as $subscription ) {
 							$line->set_subarticle( $twinfield_subarticle_code );
 							//$line->set_description( $result->subscription_name );
 							$line->set_value_excl( (float) $result->price );
-							$line->set_free_text_1( $result->name );
+
+							$free_text_1 = $result->name;
+							if ( strlen( $free_text_1 ) > 36 ) {
+								// opmerkingen mag maximaal 36 tekens bevatten wanneer het een vrije tekst betreft.
+								$free_text_1 = substr( $free_text_1, 0, 35 ) . '…';
+							}
+							$line->set_free_text_1( $free_text_1 );
+
 							$line->set_free_text_2( sprintf(
 								'%s - %s',
 								date_i18n( 'D j M Y', $date_start->getTimestamp() ),
