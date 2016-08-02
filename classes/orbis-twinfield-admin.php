@@ -170,7 +170,7 @@ class Orbis_Twinfield_Admin {
 				$last_day_month = clone $date;
 				$last_day_month->modify( 'last day of this month' );
 
-				$ahead_limit = new DateTime( '+2 month' );
+				$ahead_limit = new DateTime( '+1 month' );
 
 				$day_function = 'DAYOFYEAR';
 
