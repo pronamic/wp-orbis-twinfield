@@ -98,6 +98,8 @@ foreach ( $subscriptions as $subscription ) {
 				<select name="interval">
 					<option value="-1" selected="selected"><?php esc_html_e( 'Interval', 'orbis_twinfield' ); ?></option>
 					<option value="Y" <?php selected( $interval, 'Y' ); ?>><?php esc_html_e( 'Yearly', 'orbis_twinfield' ); ?></option>
+					<option value="2Y" <?php selected( $interval, '2Y' ); ?>><?php esc_html_e( 'Two Yearly', 'orbis_twinfield' ); ?></option>
+					<option value="3Y" <?php selected( $interval, '3Y' ); ?>><?php esc_html_e( 'Three Yearly', 'orbis_twinfield' ); ?></option>
 					<option value="Q" <?php selected( $interval, 'Q' ); ?>><?php esc_html_e( 'Quarterly', 'orbis_twinfield' ); ?></option>
 					<option value="M" <?php selected( $interval, 'M' ); ?>><?php esc_html_e( 'Monthly', 'orbis_twinfield' ); ?></option>
 				</select>
@@ -275,6 +277,20 @@ foreach ( $subscriptions as $subscription ) {
 
 									break;
 								// Year
+								case '2Y' :
+									$date_start->setDate( $date->format( 'Y' ), $month, $day );
+
+									$date_end = clone $date_start;
+									$date_end->modify( '+2 year' );
+
+									break;
+								case '3Y' :
+									$date_start->setDate( $date->format( 'Y' ), $month, $day );
+
+									$date_end = clone $date_start;
+									$date_end->modify( '+3 year' );
+
+									break;
 								case 'Y' :
 								default : 
 									$date_start->setDate( $date->format( 'Y' ), $month, $day );
