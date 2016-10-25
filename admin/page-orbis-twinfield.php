@@ -261,7 +261,7 @@ foreach ( $subscriptions as $subscription ) {
 
 							switch ( $result->interval ) {
 								// Month
-								case 'M' : 
+								case 'M' :
 									$date_start->setDate( $date->format( 'Y' ), $date->format( 'n' ), $day );
 
 									$date_end = clone $date_start;
@@ -271,7 +271,7 @@ foreach ( $subscriptions as $subscription ) {
 								// Quarter
 								case 'Q' :
 									$date_start = new DateTime( $result->expiration_date );
-									
+
 									$date_end   = new DateTime( $result->expiration_date );
 									$date_end->modify( '+3 month' );
 
@@ -292,7 +292,7 @@ foreach ( $subscriptions as $subscription ) {
 
 									break;
 								case 'Y' :
-								default : 
+								default :
 									$date_start->setDate( $date->format( 'Y' ), $month, $day );
 
 									$date_end = clone $date_start;
