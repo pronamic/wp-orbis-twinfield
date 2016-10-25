@@ -78,13 +78,19 @@ class Orbis_Twinfield_Plugin extends Orbis_Plugin {
 
 			$financials = $customer->get_financials();
 			$financials->set_due_days( 14 );
-			// $financials->set_ebilling( get_post_meta( $post->ID, '_orbis_company_ebilling', true ) );
-			// $financials->set_ebillmail( get_post_meta( $post_id, '_orbis_company_email', true ) );
-			// $financials->set_vat_code( get_option( 'twinfield_default_vat_code' ) );
 
-			$credit_management = $customer->get_credit_management();
-			$credit_management->set_send_reminder( 'email' );
-			$credit_management->set_reminder_email( get_post_meta( $post_id, '_orbis_company_email', true ) );
+			$invoice_email = get_post_meta( $post->ID, '_orbis_invoice_ebilling', true );
+
+			if ( ! empty( $invoice_email ) ) {
+				$financials->set_ebilling( true );
+				$financials->set_ebillmail( $invoice_email );
+
+				$credit_management = $customer->get_credit_management();
+				$credit_management->set_send_reminder( 'email' );
+				$credit_management->set_reminder_email( $invoice_email );
+			}
+
+			// $financials->set_vat_code( get_option( 'twinfield_default_vat_code' ) );
 		}
 
 		return $customer;
