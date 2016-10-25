@@ -79,7 +79,7 @@ class Orbis_Twinfield_Plugin extends Orbis_Plugin {
 			$financials = $customer->get_financials();
 			$financials->set_due_days( 14 );
 
-			$invoice_email = get_post_meta( $post->ID, '_orbis_invoice_ebilling', true );
+			$invoice_email = get_post_meta( $post->ID, '_orbis_invoice_email', true );
 
 			if ( ! empty( $invoice_email ) ) {
 				$financials->set_ebilling( true );
