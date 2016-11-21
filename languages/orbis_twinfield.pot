@@ -1,117 +1,159 @@
-# Copyright (C) 2015 Pronamic
+# Copyright (C) 2016 Pronamic
 # This file is distributed under the Copyright (c) Pronamic.
 msgid ""
 msgstr ""
 "Project-Id-Version: Orbis Twinfield 1.0.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/orbis-twinfield\n"
-"POT-Creation-Date: 2015-10-16 09:31:18+00:00\n"
+"POT-Creation-Date: 2016-11-21 14:25:46+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2015-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2016-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"X-Generator: grunt-wp-i18n 0.5.3\n"
+"X-Generator: grunt-wp-i18n 0.5.4\n"
 
-#: admin/page-orbis-twinfield.php:52
-msgid "Inserted"
-msgstr ""
-
-#: admin/page-orbis-twinfield.php:53
-msgid "Failed"
-msgstr ""
-
-#: admin/page-orbis-twinfield.php:95
-msgid "This month"
-msgstr ""
-
-#: admin/page-orbis-twinfield.php:103
-msgid "Interval"
-msgstr ""
-
-#: admin/page-orbis-twinfield.php:104
-msgid "Yearly"
-msgstr ""
-
-#: admin/page-orbis-twinfield.php:105
-msgid "Monthly"
-msgstr ""
-
-#: admin/page-orbis-twinfield.php:110
-msgid "Execute"
-msgstr ""
-
-#: admin/page-orbis-twinfield.php:145
+#: admin/page-projects-twinfield.php:46
+#: admin/page-subscriptions-twinfield.php:158
 msgid "Invoice created by Orbis on %s."
 msgstr ""
 
-#: admin/page-orbis-twinfield.php:163
+#: admin/page-projects-twinfield.php:64
+#: admin/page-subscriptions-twinfield.php:176
 msgid "Customer"
 msgstr ""
 
-#: admin/page-orbis-twinfield.php:172
+#: admin/page-projects-twinfield.php:73
+#: admin/page-subscriptions-twinfield.php:185
 msgid "ID"
 msgstr ""
 
-#: admin/page-orbis-twinfield.php:173
-msgid "Subscription"
+#: admin/page-projects-twinfield.php:74
+msgid "Project"
 msgstr ""
 
-#: admin/page-orbis-twinfield.php:174
+#: admin/page-projects-twinfield.php:75
+#: admin/page-subscriptions-twinfield.php:187
 msgid "Price"
 msgstr ""
 
-#: admin/page-orbis-twinfield.php:175
+#: admin/page-projects-twinfield.php:76
+#: admin/page-subscriptions-twinfield.php:188
 msgid "Name"
 msgstr ""
 
-#: admin/page-orbis-twinfield.php:176
-msgid "Start Date"
-msgstr ""
-
-#: admin/page-orbis-twinfield.php:177
-msgid "End Date"
-msgstr ""
-
-#: admin/page-orbis-twinfield.php:178 classes/orbis-twinfield-admin.php:55
+#: admin/page-projects-twinfield.php:77
+#: admin/page-subscriptions-twinfield.php:191
+#: classes/orbis-twinfield-admin.php:56 classes/orbis-twinfield-admin.php:65
 #: templates/company-twinfield.php:11
 msgid "Twinfield"
 msgstr ""
 
-#: admin/page-orbis-twinfield.php:179
+#: admin/page-projects-twinfield.php:78
+#: admin/page-subscriptions-twinfield.php:192
 msgid "Manual Invoice"
 msgstr ""
 
-#: admin/page-orbis-twinfield.php:197
+#: admin/page-projects-twinfield.php:111
+#: admin/page-subscriptions-twinfield.php:225
 msgid "Create Invoice"
 msgstr ""
 
-#: admin/page-orbis-twinfield.php:209
+#: admin/page-projects-twinfield.php:123
+#: admin/page-subscriptions-twinfield.php:237
 msgid "Register Invoices"
 msgstr ""
 
-#: admin/page-orbis-twinfield.php:293
+#: admin/page-projects-twinfield.php:189
+#: admin/page-subscriptions-twinfield.php:361
 msgid "Article"
 msgstr ""
 
-#: admin/page-orbis-twinfield.php:303
+#: admin/page-projects-twinfield.php:199
+#: admin/page-subscriptions-twinfield.php:371
 msgid "Subarticle"
 msgstr ""
 
-#: admin/page-orbis-twinfield.php:380
+#: admin/page-projects-twinfield.php:262
+#: admin/page-subscriptions-twinfield.php:436
+msgid "Twinfield invoice created."
+msgstr ""
+
+#: admin/page-projects-twinfield.php:273
+#: admin/page-subscriptions-twinfield.php:447
 msgid "No response from Twinfield."
 msgstr ""
 
-#. Plugin Name of the plugin/theme
-msgid "Orbis Twinfield"
+#: admin/page-subscriptions-twinfield.php:45
+msgid "Inserted"
 msgstr ""
 
-#: classes/orbis-twinfield-admin.php:87
+#: admin/page-subscriptions-twinfield.php:46
+msgid "Failed"
+msgstr ""
+
+#: admin/page-subscriptions-twinfield.php:90
+msgid "This month"
+msgstr ""
+
+#: admin/page-subscriptions-twinfield.php:99
+msgid "Interval"
+msgstr ""
+
+#: admin/page-subscriptions-twinfield.php:100
+msgid "Yearly"
+msgstr ""
+
+#: admin/page-subscriptions-twinfield.php:101
+msgid "Two Yearly"
+msgstr ""
+
+#: admin/page-subscriptions-twinfield.php:102
+msgid "Three Yearly"
+msgstr ""
+
+#: admin/page-subscriptions-twinfield.php:103
+msgid "Quarterly"
+msgstr ""
+
+#: admin/page-subscriptions-twinfield.php:104
+msgid "Monthly"
+msgstr ""
+
+#: admin/page-subscriptions-twinfield.php:110
+msgid "Execute"
+msgstr ""
+
+#: admin/page-subscriptions-twinfield.php:186
+msgid "Subscription"
+msgstr ""
+
+#: admin/page-subscriptions-twinfield.php:189
+msgid "Start Date"
+msgstr ""
+
+#: admin/page-subscriptions-twinfield.php:190
+msgid "End Date"
+msgstr ""
+
+#: classes/orbis-twinfield-admin.php:55
+msgid "Orbis Projects Twinfield"
+msgstr ""
+
+#: classes/orbis-twinfield-admin.php:64
+msgid "Orbis Subscriptions Twinfield"
+msgstr ""
+
+#: classes/orbis-twinfield-admin.php:104
 msgid "Twinfield ID:"
 msgstr ""
 
 #: templates/company-twinfield.php:16
 msgid "Twinfield ID"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "Orbis Twinfield"
 msgstr ""
 
 #. Plugin URI of the plugin/theme
