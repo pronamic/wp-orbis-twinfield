@@ -51,20 +51,36 @@ class Orbis_Twinfield_Admin {
 	 */
 	public function admin_menu() {
 		add_submenu_page(
-			'edit.php?post_type=orbis_subscription',
-			__( 'Orbis Twinfield', 'orbis_twinfield' ),
+			'edit.php?post_type=orbis_project',
+			__( 'Orbis Projects Twinfield', 'orbis_twinfield' ),
 			__( 'Twinfield', 'orbis_twinfield' ),
 			'manage_options',
 			'orbis_twinfield',
-			array( $this, 'page_orbis_twinfield' )
+			array( $this, 'page_projects_twinfield' )
+		);
+
+		add_submenu_page(
+			'edit.php?post_type=orbis_subscription',
+			__( 'Orbis Subscriptions Twinfield', 'orbis_twinfield' ),
+			__( 'Twinfield', 'orbis_twinfield' ),
+			'manage_options',
+			'orbis_twinfield',
+			array( $this, 'page_subscriptions_twinfield' )
 		);
 	}
 
 	/**
-	 * Page Orbis InfiniteWP
+	 * Page projects Twinfield.
 	 */
-	public function page_orbis_twinfield() {
-		include plugin_dir_path( $this->plugin->file ) . 'admin/page-orbis-twinfield.php';
+	public function page_projects_twinfield() {
+		include plugin_dir_path( $this->plugin->file ) . 'admin/page-projects-twinfield.php';
+	}
+
+	/**
+	 * Page subscriptions Twinfield.
+	 */
+	public function page_subscriptions_twinfield() {
+		include plugin_dir_path( $this->plugin->file ) . 'admin/page-subscriptions-twinfield.php';
 	}
 
 	/**
@@ -288,5 +304,63 @@ class Orbis_Twinfield_Admin {
 				exit;
 			}
 		}
+	}
+
+	public function get_projects() {
+		global $wpdb;
+
+		$sql = "
+			SELECT
+				project.id ,
+				project.name ,
+				project.number_seconds AS available_seconds ,
+				project.invoice_number AS invoice_number ,
+				project.invoicable ,
+				project.post_id AS project_post_id,
+				manager.ID AS project_manager_id,
+				manager.display_name AS project_manager_name,
+				principal.id AS principal_id ,
+				principal.name AS principal_name ,
+				principal.post_id AS principal_post_id
+			FROM
+				$wpdb->orbis_projects AS project
+					LEFT JOIN
+				$wpdb->posts AS post
+						ON project.post_id = post.ID
+					LEFT JOIN
+				$wpdb->users AS manager
+						ON post.post_author = manager.ID
+					LEFT JOIN
+				$wpdb->orbis_companies AS principal
+						ON project.principal_id = principal.id
+			WHERE
+				project.invoice_number IS NULL
+					AND
+				project.invoicable
+					AND
+				NOT project.invoiced
+					AND
+				project.start_date > '2011-01-01'
+					AND
+				(
+					project.finished
+						OR
+					project.name LIKE '%strippenkaart%'
+						OR
+					project.name LIKE '%adwords%'
+						OR
+					project.name LIKE '%marketing%'
+				)
+			GROUP BY
+				project.id
+			ORDER BY
+				principal.name
+			;
+		";
+
+		// Projects
+		$projects = $wpdb->get_results( $sql ); // unprepared SQL
+
+		return $projects;
 	}
 }
