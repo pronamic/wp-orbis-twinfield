@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Orbis Twinfield\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/orbis-twinfield\n"
-"POT-Creation-Date: 2016-11-21 14:25:46+00:00\n"
-"PO-Revision-Date: 2016-11-21 15:26+0100\n"
+"POT-Creation-Date: 2017-09-07 12:04:41+00:00\n"
+"PO-Revision-Date: 2017-09-07 14:04+0100\n"
 "Last-Translator: Remco Tolsma <info@remcotolsma.nl>\n"
 "Language-Team: Pronamic <info@pronamic.nl>\n"
 "Language: nl_NL\n"
@@ -13,20 +13,20 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e;_x:2c,1\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: Poedit 1.7.4\n"
 
 #: admin/page-projects-twinfield.php:46
-#: admin/page-subscriptions-twinfield.php:158
+#: admin/page-subscriptions-twinfield.php:169
 msgid "Invoice created by Orbis on %s."
 msgstr "Factuur gemaakt door Orbis op %s."
 
 #: admin/page-projects-twinfield.php:64
-#: admin/page-subscriptions-twinfield.php:176
+#: admin/page-subscriptions-twinfield.php:199
 msgid "Customer"
 msgstr "Klant"
 
 #: admin/page-projects-twinfield.php:73
-#: admin/page-subscriptions-twinfield.php:185
+#: admin/page-subscriptions-twinfield.php:214
 msgid "ID"
 msgstr "ID"
 
@@ -35,54 +35,54 @@ msgid "Project"
 msgstr "Project"
 
 #: admin/page-projects-twinfield.php:75
-#: admin/page-subscriptions-twinfield.php:187
+#: admin/page-subscriptions-twinfield.php:216
 msgid "Price"
 msgstr "Prijs"
 
 #: admin/page-projects-twinfield.php:76
-#: admin/page-subscriptions-twinfield.php:188
+#: admin/page-subscriptions-twinfield.php:217
 msgid "Name"
 msgstr "Naam"
 
 #: admin/page-projects-twinfield.php:77
-#: admin/page-subscriptions-twinfield.php:191
+#: admin/page-subscriptions-twinfield.php:220
 #: classes/orbis-twinfield-admin.php:56 classes/orbis-twinfield-admin.php:65
 #: templates/company-twinfield.php:11
 msgid "Twinfield"
 msgstr "Twinfield"
 
 #: admin/page-projects-twinfield.php:78
-#: admin/page-subscriptions-twinfield.php:192
+#: admin/page-subscriptions-twinfield.php:221
 msgid "Manual Invoice"
 msgstr "Handmatig factureren"
 
 #: admin/page-projects-twinfield.php:111
-#: admin/page-subscriptions-twinfield.php:225
+#: admin/page-subscriptions-twinfield.php:254
 msgid "Create Invoice"
 msgstr "Factuur maken"
 
 #: admin/page-projects-twinfield.php:123
-#: admin/page-subscriptions-twinfield.php:237
+#: admin/page-subscriptions-twinfield.php:266
 msgid "Register Invoices"
 msgstr "Registreer facturen"
 
 #: admin/page-projects-twinfield.php:189
-#: admin/page-subscriptions-twinfield.php:361
+#: admin/page-subscriptions-twinfield.php:390
 msgid "Article"
 msgstr "Artikel"
 
 #: admin/page-projects-twinfield.php:199
-#: admin/page-subscriptions-twinfield.php:371
+#: admin/page-subscriptions-twinfield.php:400
 msgid "Subarticle"
 msgstr "Subartikel"
 
 #: admin/page-projects-twinfield.php:262
-#: admin/page-subscriptions-twinfield.php:436
+#: admin/page-subscriptions-twinfield.php:465
 msgid "Twinfield invoice created."
 msgstr "Twinfield factuur gemaakt."
 
 #: admin/page-projects-twinfield.php:273
-#: admin/page-subscriptions-twinfield.php:447
+#: admin/page-subscriptions-twinfield.php:476
 msgid "No response from Twinfield."
 msgstr "Geen antwoord van Twinfield."
 
@@ -126,15 +126,23 @@ msgstr "Maandelijks"
 msgid "Execute"
 msgstr "Uitvoeren"
 
-#: admin/page-subscriptions-twinfield.php:186
+#: admin/page-subscriptions-twinfield.php:202
+msgid "Header"
+msgstr "Header"
+
+#: admin/page-subscriptions-twinfield.php:205
+msgid "Footer"
+msgstr "Footer"
+
+#: admin/page-subscriptions-twinfield.php:215
 msgid "Subscription"
 msgstr "Abonnement"
 
-#: admin/page-subscriptions-twinfield.php:189
+#: admin/page-subscriptions-twinfield.php:218
 msgid "Start Date"
 msgstr "Startdatum"
 
-#: admin/page-subscriptions-twinfield.php:190
+#: admin/page-subscriptions-twinfield.php:219
 msgid "End Date"
 msgstr "Einddatum"
 

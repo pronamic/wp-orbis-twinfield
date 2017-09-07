@@ -144,6 +144,73 @@ foreach ( $subscriptions as $subscription ) {
 		<?php
 
 		$twinfield_customer = get_post_meta( $company->post_id, '_twinfield_customer_id', true );
+		$country            = get_post_meta( $company->post_id, '_orbis_company_country', true );
+
+		$header_text = '';
+
+		$vies_countries = array(
+			'AT' => 'Oostenrijk',
+			'BE' => 'België',
+			'BG' => 'Bulgarije',
+			'CY' => 'Cyprus',
+			'CZ' => 'Tsjechië',
+			'DE' => 'Duitsland',
+			'DK' => 'Denemarken',
+			'EE' => 'Estland',
+			'EL' => 'Griekenland',
+			'ES' => 'Spanje',
+			'FI' => 'Finland',
+			'FR' => 'Frankrijk',
+			'GB' => 'Verenigd Koninkrijk',
+			'HR' => 'Kroatië',
+			'HU' => 'Hongarije',
+			'IE' => 'Ierland',
+			'IT' => 'Italy',
+			'LT' => 'Litouwen',
+			'LU' => 'Luxemburg',			
+			'LV' => 'Letland',
+			'MT' => 'Malta',
+			'NL' => 'Nederland',
+			'PL' => 'Poland',
+			'PT' => 'Portugal',
+			'RO' => 'Roemenië',
+			'SE' => 'Zweden',
+			'SI' => 'Slovenië',
+			'SK' => 'Slowakije',
+		);
+
+		unset( $vies_countries['NL'] );
+
+		$vat_code = 'VH';
+
+		if ( isset( $vies_countries[ $country ] ) ) {
+			$vat_code = 'VHV';
+
+			$header_text .= 'Btw verlegd.';
+		}
+
+		$terms = wp_get_post_terms( $company->post_id, 'orbis_payment_method' );
+
+		$payment_method_term = array_shift( $terms );
+
+		foreach ( $company->subscriptions as $i => $subscription ) {
+			$terms = wp_get_post_terms( $subscription->post_id, 'orbis_payment_method' );
+		
+			$term = array_shift( $terms );
+
+			if ( is_object( $term ) ) {
+				$payment_method_term = $term;
+			}
+		}
+
+		if ( is_object( $payment_method_term ) ) {
+			$header_text .= $payment_method_term->description;
+		}
+
+		$footer_text = sprintf(
+			__( 'Invoice created by Orbis on %s.', 'orbis_twinfield' ),
+			date_i18n( 'D j M Y @ H:i' )
+		);
 
 		$sales_invoice = new Pronamic\WP\Twinfield\SalesInvoices\SalesInvoice();
 
@@ -154,10 +221,8 @@ foreach ( $subscriptions as $subscription ) {
 		$header->set_customer( $twinfield_customer );
 		$header->set_status( Pronamic\WP\Twinfield\SalesInvoices\SalesInvoiceStatus::STATUS_CONCEPT );
 		$header->set_payment_method( Pronamic\WP\Twinfield\PaymentMethods::BANK );
-		$header->set_footer_text( sprintf(
-			__( 'Invoice created by Orbis on %s.', 'orbis_twinfield' ),
-			date_i18n( 'D j M Y @ H:i' )
-		) );
+		$header->set_header_text( $header_text );
+		$header->set_footer_text( $footer_text );
 
 		$register_invoices = array();
 
@@ -175,6 +240,12 @@ foreach ( $subscriptions as $subscription ) {
 					<dl class="dl-horizontal">
 						<dt><?php esc_html_e( 'Customer', 'orbis_twinfield' ); ?></dt>
 						<dd><?php echo esc_html( $twinfield_customer ); ?></dd>
+
+						<dt><?php esc_html_e( 'Header', 'orbis_twinfield' ); ?></dt>
+						<dd><?php echo esc_html( $header_text ); ?></dd>
+
+						<dt><?php esc_html_e( 'Footer', 'orbis_twinfield' ); ?></dt>
+						<dd><?php echo esc_html( $footer_text ); ?></dd>
 					</dl>
 				</div>
 
@@ -188,6 +259,7 @@ foreach ( $subscriptions as $subscription ) {
 							<th scope="col"><?php esc_html_e( 'Name', 'orbis_twinfield' ); ?></th>
 							<th scope="col"><?php esc_html_e( 'Start Date', 'orbis_twinfield' ); ?></th>
 							<th scope="col"><?php esc_html_e( 'End Date', 'orbis_twinfield' ); ?></th>
+							<th scope="col"><?php esc_html_e( 'Vat Code', 'orbis_twinfield' ); ?></th>
 							<th scope="col"><?php esc_html_e( 'Twinfield', 'orbis_twinfield' ); ?></th>
 							<th scope="col"><?php esc_html_e( 'Manual Invoice', 'orbis_twinfield' ); ?></th>
 						</tr>
@@ -210,7 +282,7 @@ foreach ( $subscriptions as $subscription ) {
 
 								?>
 							</td>
-							<td colspan="3">
+							<td colspan="4">
 
 							</td>
 							<td>
@@ -308,6 +380,7 @@ foreach ( $subscriptions as $subscription ) {
 							$line->set_article( $twinfield_article_code );
 							$line->set_subarticle( $twinfield_subarticle_code );
 							//$line->set_description( $result->subscription_name );
+							$line->set_vat_code( $vat_code );
 							$line->set_value_excl( (float) $result->price );
 
 							$free_text_1 = $result->name;
@@ -351,6 +424,9 @@ foreach ( $subscriptions as $subscription ) {
 								</td>
 								<td>
 									<?php echo esc_html( date_i18n( 'D j M Y', $date_end->getTimestamp() ) ); ?>
+								</td>
+								<td>
+									<code><?php echo esc_html( $vat_code ); ?></code>
 								</td>
 								<td>
 									<?php
