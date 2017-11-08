@@ -254,6 +254,7 @@ foreach ( $subscriptions as $subscription ) {
 					<thead>
 						<tr>
 							<th scope="col"><?php esc_html_e( 'ID', 'orbis_twinfield' ); ?></th>
+							<th scope="col"><?php esc_html_e( 'Exclude', 'orbis_twinfield' ); ?></th>
 							<th scope="col"><?php esc_html_e( 'Subscription', 'orbis_twinfield' ); ?></th>
 							<th scope="col"><?php esc_html_e( 'Price', 'orbis_twinfield' ); ?></th>
 							<th scope="col"><?php esc_html_e( 'Name', 'orbis_twinfield' ); ?></th>
@@ -267,7 +268,29 @@ foreach ( $subscriptions as $subscription ) {
 
 					<tfoot>
 						<tr>
-							<td colspan="2">
+							<td>
+								<?php
+
+								printf(
+									'<input name="company" value="%s" type="hidden" />',
+									esc_attr( $company->id )
+								);
+
+								?>
+							</td>
+							<td>
+								<?php
+
+								submit_button(
+									__( 'Update', 'orbis_twinfield' ),
+									'secondary',
+									'orbis_twinfield_update',
+									false
+								);
+
+								?>
+							</td>
+							<td>
 
 							</td>
 							<td>
@@ -287,11 +310,6 @@ foreach ( $subscriptions as $subscription ) {
 							</td>
 							<td>
 								<?php
-
-								printf(
-									'<input name="company" value="%s" type="hidden" />',
-									esc_attr( $company->id )
-								);
 
 								submit_button(
 									__( 'Create Invoice', 'orbis_twinfield' ),
@@ -323,7 +341,13 @@ foreach ( $subscriptions as $subscription ) {
 
 							<?php
 
-							$name = 'subscriptions[%d][%s]';
+							$name = 'subscriptions[%s][%s]';
+
+							$exclude = false;
+
+							if ( isset( $_POST['subscriptions'], $_POST['subscriptions'][ $result->post_id ], $_POST['subscriptions'][ $result->post_id ]['exclude'] ) ) {
+								$exclude = true;
+							}
 
 							$date_start = new DateTime( $result->activation_date );
 							$date_end   = new DateTime( $result->activation_date );
@@ -376,37 +400,42 @@ foreach ( $subscriptions as $subscription ) {
 							$twinfield_article_code    = get_post_meta( $result->product_post_id, '_twinfield_article_code', true );
 							$twinfield_subarticle_code = get_post_meta( $result->product_post_id, '_twinfield_subarticle_code', true );
 
-							$line = $sales_invoice->new_line();
-							$line->set_article( $twinfield_article_code );
-							$line->set_subarticle( $twinfield_subarticle_code );
-							//$line->set_description( $result->subscription_name );
-							$line->set_vat_code( $vat_code );
-							$line->set_value_excl( (float) $result->price );
+							if ( ! $exclude ) {
+								$line = $sales_invoice->new_line();
+								$line->set_article( $twinfield_article_code );
+								$line->set_subarticle( $twinfield_subarticle_code );
+								//$line->set_description( $result->subscription_name );
+								$line->set_vat_code( $vat_code );
+								$line->set_value_excl( (float) $result->price );
 
-							$free_text_1 = $result->name;
-							if ( strlen( $free_text_1 ) > 36 ) {
-								// opmerkingen mag maximaal 36 tekens bevatten wanneer het een vrije tekst betreft.
-								$free_text_1 = substr( $free_text_1, 0, 35 ) . '…';
+								$free_text_1 = $result->name;
+								if ( strlen( $free_text_1 ) > 36 ) {
+									// opmerkingen mag maximaal 36 tekens bevatten wanneer het een vrije tekst betreft.
+									$free_text_1 = substr( $free_text_1, 0, 35 ) . '…';
+								}
+								$line->set_free_text_1( $free_text_1 );
+
+								$line->set_free_text_2( sprintf(
+									'%s - %s',
+									date_i18n( 'D j M Y', $date_start->getTimestamp() ),
+									date_i18n( 'D j M Y', $date_end->getTimestamp() )
+								) );
+								$line->set_free_text_3( $result->id );
+
+								$register_invoices[] = (object) array(
+									'post_id'    => $result->post_id,
+									'start_date' => $date_start,
+									'end_date'   => $date_end,
+								);
 							}
-							$line->set_free_text_1( $free_text_1 );
-
-							$line->set_free_text_2( sprintf(
-								'%s - %s',
-								date_i18n( 'D j M Y', $date_start->getTimestamp() ),
-								date_i18n( 'D j M Y', $date_end->getTimestamp() )
-							) );
-							$line->set_free_text_3( $result->id );
-
-							$register_invoices[] = (object) array(
-								'post_id'    => $result->post_id,
-								'start_date' => $date_start,
-								'end_date'   => $date_end,
-							);
 
 							?>
 							<tr>
 								<td>
 									<?php echo esc_html( $result->id ); ?>
+								</td>
+								<td>
+									<input name="<?php echo esc_attr( sprintf( $name, $result->post_id, 'exclude' ) ); ?>" value="1" type="checkbox" <?php checked( $exclude ); ?> />
 								</td>
 								<td>
 									<a href="<?php echo esc_attr( get_permalink( $result->post_id ) ); ?>">
@@ -457,11 +486,11 @@ foreach ( $subscriptions as $subscription ) {
 									$name = 'subscriptions[%d][%s]';
 
 									?>
-									<input name="<?php echo esc_attr( sprintf( $name, $i, 'id' ) ); ?>" value="<?php echo esc_attr( $result->id ); ?>" type="hidden" />
-									<input name="<?php echo esc_attr( sprintf( $name, $i, 'post_id' ) ); ?>" value="<?php echo esc_attr( $result->post_id ); ?>" type="hidden" />
-									<input name="<?php echo esc_attr( sprintf( $name, $i, 'invoice_number' ) ); ?>" value="" type="text" />
-									<input name="<?php echo esc_attr( sprintf( $name, $i, 'date_start' ) ); ?>" value="<?php echo esc_attr( $date_start->format( DATE_W3C ) ); ?>" type="hidden" />
-									<input name="<?php echo esc_attr( sprintf( $name, $i, 'date_end' ) ); ?>" value="<?php echo esc_attr( $date_end->format( DATE_W3C ) ); ?>" type="hidden" />
+									<input name="<?php echo esc_attr( sprintf( $name, $result->post_id, 'id' ) ); ?>" value="<?php echo esc_attr( $result->id ); ?>" type="hidden" />
+									<input name="<?php echo esc_attr( sprintf( $name, $result->post_id, 'post_id' ) ); ?>" value="<?php echo esc_attr( $result->post_id ); ?>" type="hidden" />
+									<input name="<?php echo esc_attr( sprintf( $name, $result->post_id, 'invoice_number' ) ); ?>" value="" type="text" />
+									<input name="<?php echo esc_attr( sprintf( $name, $result->post_id, 'date_start' ) ); ?>" value="<?php echo esc_attr( $date_start->format( DATE_W3C ) ); ?>" type="hidden" />
+									<input name="<?php echo esc_attr( sprintf( $name, $result->post_id, 'date_end' ) ); ?>" value="<?php echo esc_attr( $date_end->format( DATE_W3C ) ); ?>" type="hidden" />
 								</td>
 							</tr>
 

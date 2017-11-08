@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Orbis Twinfield 1.0.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/orbis-twinfield\n"
-"POT-Creation-Date: 2017-09-07 12:04:41+00:00\n"
+"POT-Creation-Date: 2017-11-08 10:27:25+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -14,17 +14,17 @@ msgstr ""
 "X-Generator: grunt-wp-i18n 0.5.4\n"
 
 #: admin/page-projects-twinfield.php:46
-#: admin/page-subscriptions-twinfield.php:169
+#: admin/page-subscriptions-twinfield.php:211
 msgid "Invoice created by Orbis on %s."
 msgstr ""
 
 #: admin/page-projects-twinfield.php:64
-#: admin/page-subscriptions-twinfield.php:199
+#: admin/page-subscriptions-twinfield.php:241
 msgid "Customer"
 msgstr ""
 
 #: admin/page-projects-twinfield.php:73
-#: admin/page-subscriptions-twinfield.php:214
+#: admin/page-subscriptions-twinfield.php:256
 msgid "ID"
 msgstr ""
 
@@ -33,54 +33,54 @@ msgid "Project"
 msgstr ""
 
 #: admin/page-projects-twinfield.php:75
-#: admin/page-subscriptions-twinfield.php:216
+#: admin/page-subscriptions-twinfield.php:259
 msgid "Price"
 msgstr ""
 
 #: admin/page-projects-twinfield.php:76
-#: admin/page-subscriptions-twinfield.php:217
+#: admin/page-subscriptions-twinfield.php:260
 msgid "Name"
 msgstr ""
 
 #: admin/page-projects-twinfield.php:77
-#: admin/page-subscriptions-twinfield.php:220
+#: admin/page-subscriptions-twinfield.php:264
 #: classes/orbis-twinfield-admin.php:56 classes/orbis-twinfield-admin.php:65
 #: templates/company-twinfield.php:11
 msgid "Twinfield"
 msgstr ""
 
 #: admin/page-projects-twinfield.php:78
-#: admin/page-subscriptions-twinfield.php:221
+#: admin/page-subscriptions-twinfield.php:265
 msgid "Manual Invoice"
 msgstr ""
 
 #: admin/page-projects-twinfield.php:111
-#: admin/page-subscriptions-twinfield.php:254
+#: admin/page-subscriptions-twinfield.php:315
 msgid "Create Invoice"
 msgstr ""
 
 #: admin/page-projects-twinfield.php:123
-#: admin/page-subscriptions-twinfield.php:266
+#: admin/page-subscriptions-twinfield.php:327
 msgid "Register Invoices"
 msgstr ""
 
 #: admin/page-projects-twinfield.php:189
-#: admin/page-subscriptions-twinfield.php:390
+#: admin/page-subscriptions-twinfield.php:466
 msgid "Article"
 msgstr ""
 
 #: admin/page-projects-twinfield.php:199
-#: admin/page-subscriptions-twinfield.php:400
+#: admin/page-subscriptions-twinfield.php:476
 msgid "Subarticle"
 msgstr ""
 
 #: admin/page-projects-twinfield.php:262
-#: admin/page-subscriptions-twinfield.php:465
+#: admin/page-subscriptions-twinfield.php:541
 msgid "Twinfield invoice created."
 msgstr ""
 
 #: admin/page-projects-twinfield.php:273
-#: admin/page-subscriptions-twinfield.php:476
+#: admin/page-subscriptions-twinfield.php:552
 msgid "No response from Twinfield."
 msgstr ""
 
@@ -124,24 +124,36 @@ msgstr ""
 msgid "Execute"
 msgstr ""
 
-#: admin/page-subscriptions-twinfield.php:202
+#: admin/page-subscriptions-twinfield.php:244
 msgid "Header"
 msgstr ""
 
-#: admin/page-subscriptions-twinfield.php:205
+#: admin/page-subscriptions-twinfield.php:247
 msgid "Footer"
 msgstr ""
 
-#: admin/page-subscriptions-twinfield.php:215
+#: admin/page-subscriptions-twinfield.php:257
+msgid "Exclude"
+msgstr ""
+
+#: admin/page-subscriptions-twinfield.php:258
 msgid "Subscription"
 msgstr ""
 
-#: admin/page-subscriptions-twinfield.php:218
+#: admin/page-subscriptions-twinfield.php:261
 msgid "Start Date"
 msgstr ""
 
-#: admin/page-subscriptions-twinfield.php:219
+#: admin/page-subscriptions-twinfield.php:262
 msgid "End Date"
+msgstr ""
+
+#: admin/page-subscriptions-twinfield.php:263
+msgid "Vat Code"
+msgstr ""
+
+#: admin/page-subscriptions-twinfield.php:285
+msgid "Update"
 msgstr ""
 
 #: classes/orbis-twinfield-admin.php:55
