@@ -167,7 +167,7 @@ foreach ( $subscriptions as $subscription ) {
 			'IE' => 'Ierland',
 			'IT' => 'Italy',
 			'LT' => 'Litouwen',
-			'LU' => 'Luxemburg',			
+			'LU' => 'Luxemburg',
 			'LV' => 'Letland',
 			'MT' => 'Malta',
 			'NL' => 'Nederland',
@@ -195,7 +195,7 @@ foreach ( $subscriptions as $subscription ) {
 
 		foreach ( $company->subscriptions as $i => $subscription ) {
 			$terms = wp_get_post_terms( $subscription->post_id, 'orbis_payment_method' );
-		
+
 			$term = array_shift( $terms );
 
 			if ( is_object( $term ) ) {

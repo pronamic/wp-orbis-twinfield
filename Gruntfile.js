@@ -5,6 +5,23 @@ module.exports = function( grunt ) {
 	grunt.initConfig( {
 		pkg: grunt.file.readJSON( 'package.json' ),
 
+		dirs: {
+			ignore: [ 'build', 'node_modules', 'vendor' ].join( ',' ) 
+		},
+
+		// PHP Code Sniffer
+		phpcs: {
+			application: {
+				dir: [ '.' ],
+			},
+			options: {
+				bin: 'vendor/bin/phpcs',
+				standard: 'phpcs.ruleset.xml',
+				extensions: 'php',
+				ignore: '<%= dirs.ignore %>',
+			}
+		},
+
 		// PHPLint
 		phplint: {
 			options: {
@@ -17,21 +34,6 @@ module.exports = function( grunt ) {
 				'!deploy/**',
 				'!node_modules/**',
 			]
-		},
-
-		// PHP Code Sniffer
-		phpcs: {
-			application: {
-				src: [
-					'**/*.php',
-					'!deploy/**',
-					'!node_modules/**'
-				],
-			},
-			options: {
-				standard: 'phpcs.ruleset.xml',
-				showSniffCodes: true
-			}
 		},
 
 		// PHPUnit
@@ -102,6 +104,8 @@ module.exports = function( grunt ) {
 			}
 		},
 	} );
+
+	grunt.loadNpmTasks( 'grunt-phpcs' );
 
 	// Default task(s).
 	grunt.registerTask( 'default', [ 'jshint', 'phplint', 'phpcs' ] );
