@@ -184,9 +184,11 @@ foreach ( $subscriptions as $subscription ) {
 		$vat_code = 'VH';
 
 		if ( isset( $vies_countries[ $country ] ) ) {
-			$vat_code = 'VHV';
+			$vat_code = 'VHEE'; // or 'VHV'
 
 			$header_text .= 'Btw verlegd.';
+		} elseif ( 'NL' !== $country ) {
+			$vat_code = 'VHEW';
 		}
 
 		$terms = wp_get_post_terms( $company->post_id, 'orbis_payment_method' );
