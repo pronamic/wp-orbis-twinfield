@@ -24,6 +24,7 @@ foreach ( $subscriptions as $subscription ) {
 
 	if ( ! isset( $companies[ $company_id ] ) ) {
 		$company = new stdClass();
+
 		$company->id            = $subscription->company_id;
 		$company->name          = $subscription->company_name;
 		$company->post_id       = $subscription->company_post_id;
@@ -54,11 +55,13 @@ foreach ( $subscriptions as $subscription ) {
 			if ( ! empty( $ids ) ) {
 				echo '<h3>', esc_html( $label ), '</h3>';
 
-				$subscriptions = get_posts( array(
+				$subscriptions = new WP_Query( array(
 					'post_type'      => 'any',
 					'post__in'       => $ids,
 					'posts_per_page' => 50,
 				) );
+
+				$subscriptions = $subscriptions->posts;
 
 				if ( ! empty( $subscriptions ) ) {
 					echo '<ul>';
@@ -134,7 +137,6 @@ foreach ( $subscriptions as $subscription ) {
 					</a>
 				</span>
 
-				
 			</div>
 		</div>
 	</form>
@@ -184,7 +186,7 @@ foreach ( $subscriptions as $subscription ) {
 		$vat_code = 'VH';
 
 		if ( isset( $vies_countries[ $country ] ) ) {
-			$vat_code = 'VHEE'; // or 'VHV'
+			$vat_code = 'VHEE'; // or perhaps 'VHV'
 
 			$header_text .= 'Btw verlegd.';
 		} elseif ( 'NL' !== $country ) {
@@ -338,7 +340,7 @@ foreach ( $subscriptions as $subscription ) {
 					</tfoot>
 
 					<tbody>
-			
+
 						<?php foreach ( $company->subscriptions as $i => $result ) : ?>
 
 							<?php
@@ -347,7 +349,12 @@ foreach ( $subscriptions as $subscription ) {
 
 							$exclude = false;
 
-							if ( isset( $_POST['subscriptions'], $_POST['subscriptions'][ $result->post_id ], $_POST['subscriptions'][ $result->post_id ]['exclude'] ) ) {
+							// phpcs:disable
+							$post_subscriptions = $_POST['subscriptions'];
+							// phpcs:enable
+							// CSRF, sanitization, input var, input validation ok.
+
+							if ( isset( $post_subscriptions, $post_subscriptions[ $result->post_id ], $post_subscriptions[ $result->post_id ]['exclude'] ) ) {
 								$exclude = true;
 							}
 
@@ -359,7 +366,7 @@ foreach ( $subscriptions as $subscription ) {
 
 							switch ( $result->interval ) {
 								// Month
-								case 'M' :
+								case 'M':
 									$date_start->setDate( $date->format( 'Y' ), $date->format( 'n' ), $day );
 
 									$date_end = clone $date_start;
@@ -367,30 +374,30 @@ foreach ( $subscriptions as $subscription ) {
 
 									break;
 								// Quarter
-								case 'Q' :
+								case 'Q':
 									$date_start = new DateTime( $result->expiration_date );
 
-									$date_end   = new DateTime( $result->expiration_date );
+									$date_end = new DateTime( $result->expiration_date );
 									$date_end->modify( '+3 month' );
 
 									break;
 								// Year
-								case '2Y' :
+								case '2Y':
 									$date_start->setDate( $date->format( 'Y' ), $month, $day );
 
 									$date_end = clone $date_start;
 									$date_end->modify( '+2 year' );
 
 									break;
-								case '3Y' :
+								case '3Y':
 									$date_start->setDate( $date->format( 'Y' ), $month, $day );
 
 									$date_end = clone $date_start;
 									$date_end->modify( '+3 year' );
 
 									break;
-								case 'Y' :
-								default :
+								case 'Y':
+								default:
 									$date_start->setDate( $date->format( 'Y' ), $month, $day );
 
 									$date_end = clone $date_start;
@@ -406,7 +413,6 @@ foreach ( $subscriptions as $subscription ) {
 								$line = $sales_invoice->new_line();
 								$line->set_article( $twinfield_article_code );
 								$line->set_subarticle( $twinfield_subarticle_code );
-								//$line->set_description( $result->subscription_name );
 								$line->set_vat_code( $vat_code );
 								$line->set_value_excl( (float) $result->price );
 
@@ -497,7 +503,7 @@ foreach ( $subscriptions as $subscription ) {
 							</tr>
 
 						<?php endforeach; ?>
-			
+
 					</tbody>
 				</table>
 

@@ -10,6 +10,7 @@ foreach ( $projects as $project ) {
 
 	if ( ! isset( $companies[ $company_id ] ) ) {
 		$company = new stdClass();
+
 		$company->id       = $project->principal_id;
 		$company->name     = $project->principal_name;
 		$company->post_id  = $project->principal_post_id;
@@ -43,6 +44,7 @@ foreach ( $projects as $project ) {
 		$header->set_status( Pronamic\WP\Twinfield\SalesInvoices\SalesInvoiceStatus::STATUS_CONCEPT );
 		$header->set_payment_method( Pronamic\WP\Twinfield\PaymentMethods::BANK );
 		$header->set_footer_text( sprintf(
+			/* translators: placeholder is the date */
 			__( 'Invoice created by Orbis on %s.', 'orbis_twinfield' ),
 			date_i18n( 'D j M Y @ H:i' )
 		) );
@@ -132,7 +134,7 @@ foreach ( $projects as $project ) {
 					</tfoot>
 
 					<tbody>
-			
+
 						<?php foreach ( $company->projects as $i => $result ) : ?>
 
 							<?php
@@ -145,7 +147,6 @@ foreach ( $projects as $project ) {
 							$line = $sales_invoice->new_line();
 							$line->set_article( $twinfield_article_code );
 							$line->set_subarticle( $twinfield_subarticle_code );
-							//$line->set_description( $result->subscription_name );
 							$line->set_value_excl( (float) $result->price );
 
 							$free_text_1 = $result->name;
@@ -216,7 +217,7 @@ foreach ( $projects as $project ) {
 							</tr>
 
 						<?php endforeach; ?>
-			
+
 					</tbody>
 				</table>
 

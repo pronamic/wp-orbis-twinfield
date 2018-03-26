@@ -31,7 +31,7 @@ class Orbis_Twinfield_Admin {
 		add_action( 'admin_init', array( $this, 'admin_init' ) );
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 
-		add_action( 'manage_posts_custom_column' , array( $this, 'manage_posts_custom_column' ), 20, 2 );
+		add_action( 'manage_posts_custom_column', array( $this, 'manage_posts_custom_column' ), 20, 2 );
 
 	}
 
@@ -160,32 +160,30 @@ class Orbis_Twinfield_Admin {
 		$where_condition = '';
 
 		switch ( $interval ) {
-			case 'M' :
+			case 'M':
 				$last_day_month = clone $date;
 				$last_day_month->modify( 'last day of this month' );
 
 				$day_function = 'DAYOFMONTH';
 
 				$join_condition  .= $wpdb->prepare( '( YEAR( invoice.start_date ) = %d AND MONTH( invoice.start_date ) = %d )', $date->format( 'Y' ), $date->format( 'n' ) );
-
 				$where_condition .= $wpdb->prepare( 'subscription.activation_date <= %s', $last_day_month->format( 'Y-m-d' ) );
 
 				break;
-			case 'Q' :
+			case 'Q':
 				$last_day_month = clone $date;
 				$last_day_month->modify( 'last day of this quarter' );
 
 				$day_function = 'DAYOFYEAR';
 
 				$join_condition  .= $wpdb->prepare( '( YEAR( invoice.start_date ) = %d AND MONTH( invoice.start_date ) = %d )', $date->format( 'Y' ), $date->format( 'n' ) );
-
 				$where_condition .= $wpdb->prepare( 'subscription.activation_date <= %s', $last_day_month->format( 'Y-m-d' ) );
 
 				break;
-			case 'Y' :
-			case '2Y' :
-			case '3Y' :
-			default :
+			case 'Y':
+			case '2Y':
+			case '3Y':
+			default:
 				$last_day_month = clone $date;
 				$last_day_month->modify( 'last day of this month' );
 
@@ -195,7 +193,6 @@ class Orbis_Twinfield_Admin {
 
 				// Check if the end date of invoice is in next year.
 				$join_condition  .= $wpdb->prepare( 'YEAR( invoice.end_date ) = %d', $date->format( 'Y' ) + 1 );
-
 				$where_condition .= $wpdb->prepare( 'DATE( subscription.activation_date ) <= %s', $last_day_month->format( 'Y-m-d' ) );
 				$where_condition .= ' AND ';
 				$where_condition .= $wpdb->prepare( 'DATE_FORMAT( subscription.activation_date, %s ) <= %s', $date->format( 'Y' ) . '-%m-%d', $ahead_limit->format( 'Y-m-d' ) );
@@ -255,8 +252,7 @@ class Orbis_Twinfield_Admin {
 				$where_condition
 			ORDER BY
 				DAYOFYEAR( subscription.activation_date )
-			;"
-		;
+			;";
 
 		$subscriptions = $wpdb->get_results( $query ); //unprepared SQL
 
@@ -287,7 +283,7 @@ class Orbis_Twinfield_Admin {
 						$result = $subscription_object->register_invoice( $invoice_number, $date_start, $date_end );
 
 						if ( false === $result ) {
-							$failed[]   = $post_id;
+							$failed[] = $post_id;
 						} else {
 							$inserted[] = $post_id;
 						}
@@ -299,7 +295,7 @@ class Orbis_Twinfield_Admin {
 					'failed'   => empty( $failed ) ? false : implode( $failed, ',' ),
 				) );
 
-				wp_redirect( $url );
+				wp_safe_redirect( $url );
 
 				exit;
 			}

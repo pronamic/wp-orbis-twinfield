@@ -46,7 +46,7 @@ class Orbis_Twinfield_Plugin extends Orbis_Plugin {
 	/**
 	 * Initialize.
 	 */
-	function init() {
+	public function init() {
 		add_post_type_support( 'orbis_company', 'twinfield_customer' );
 		add_post_type_support( 'orbis_subs_product', 'twinfield_article' );
 		add_post_type_support( 'orbis_subscription', 'twinfield_invoiceable' );
@@ -63,7 +63,6 @@ class Orbis_Twinfield_Plugin extends Orbis_Plugin {
 	public function twinfield_post_customer( $customer, $post_id ) {
 		if ( 'orbis_company' === get_post_type( $post_id ) ) {
 			$customer->set_name( get_the_title( $post_id ) );
-			// $customer->set_webiste( get_post_meta( $post->ID, '_orbis_company_website', true ) );
 
 			$address = $customer->new_address();
 			$address->set_default( true );
@@ -90,8 +89,6 @@ class Orbis_Twinfield_Plugin extends Orbis_Plugin {
 				$credit_management->set_send_reminder( 'email' );
 				$credit_management->set_reminder_email( $invoice_email );
 			}
-
-			// $financials->set_vat_code( get_option( 'twinfield_default_vat_code' ) );
 		}
 
 		return $customer;
