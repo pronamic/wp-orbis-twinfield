@@ -1,6 +1,14 @@
 module.exports = function( grunt ) {
 	require( 'load-grunt-tasks' )( grunt );
 
+	var phpFiles = [
+		'**/*.php',
+		'!node_modules/**',
+		'!bower_components/**',
+		'!deploy/**',
+		'!vendor/**'
+	];
+
 	// Project configuration.
 	grunt.initConfig( {
 		pkg: grunt.file.readJSON( 'package.json' ),
@@ -12,13 +20,12 @@ module.exports = function( grunt ) {
 		// PHP Code Sniffer
 		phpcs: {
 			application: {
-				dir: [ '.' ],
+				src: phpFiles
 			},
 			options: {
 				bin: 'vendor/bin/phpcs',
 				standard: 'phpcs.ruleset.xml',
-				extensions: 'php',
-				ignore: '<%= dirs.ignore %>',
+				showSniffCodes: true
 			}
 		},
 
