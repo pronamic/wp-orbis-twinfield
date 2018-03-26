@@ -171,7 +171,7 @@ foreach ( $subscriptions as $subscription ) {
 			'LV' => 'Letland',
 			'MT' => 'Malta',
 			'NL' => 'Nederland',
-			'PL' => 'Poland',
+			'PL' => 'Polen',
 			'PT' => 'Portugal',
 			'RO' => 'Roemenië',
 			'SE' => 'Zweden',
