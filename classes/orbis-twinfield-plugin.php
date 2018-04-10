@@ -68,13 +68,13 @@ class Orbis_Twinfield_Plugin extends Orbis_Plugin {
 			$address->set_default( true );
 			$address->set_type( \Pronamic\WP\Twinfield\AddressTypes::INVOICE );
 			$address->set_name( get_the_title( $post_id ) );
-			$address->set_field_2( get_post_meta( $post_id, '_orbis_company_address', true ) );
-			$address->set_postcode( get_post_meta( $post_id, '_orbis_company_postcode', true ) );
-			$address->set_city( get_post_meta( $post_id, '_orbis_company_city', true ) );
-			$address->set_country( get_post_meta( $post_id, '_orbis_company_country', true ) );
-			$address->set_email( get_post_meta( $post_id, '_orbis_company_email', true ) );
-			$address->set_field_4( get_post_meta( $post_id, '_orbis_company_vat_number', true ) );
-			$address->set_field_5( get_post_meta( $post_id, '_orbis_company_kvk_number', true ) );
+			$address->set_field_2( get_post_meta( $post_id, '_orbis_address', true ) );
+			$address->set_postcode( get_post_meta( $post_id, '_orbis_postcode', true ) );
+			$address->set_city( get_post_meta( $post_id, '_orbis_city', true ) );
+			$address->set_country( get_post_meta( $post_id, '_orbis_country', true ) );
+			$address->set_email( get_post_meta( $post_id, '_orbis_email', true ) );
+			$address->set_field_4( get_post_meta( $post_id, '_orbis_vat_number', true ) );
+			$address->set_field_5( get_post_meta( $post_id, '_orbis_kvk_number', true ) );
 
 			$financials = $customer->get_financials();
 			$financials->set_due_days( 14 );
