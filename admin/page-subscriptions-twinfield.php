@@ -146,7 +146,7 @@ foreach ( $subscriptions as $subscription ) {
 		<?php
 
 		$twinfield_customer = get_post_meta( $company->post_id, '_twinfield_customer_id', true );
-		$country            = get_post_meta( $company->post_id, '_orbis_company_country', true );
+		$country            = get_post_meta( $company->post_id, '_orbis_country', true );
 
 		$header_text = '';
 
