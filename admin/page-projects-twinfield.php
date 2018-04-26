@@ -1,4 +1,5 @@
 <?php
+use Pronamic\WordPress\Money\Money;
 
 // Projects
 $projects = $this->get_projects();
@@ -94,7 +95,9 @@ foreach ( $projects as $project ) {
 									$total += $result->price;
 								}
 
-								echo esc_html( orbis_price( $total ) );
+								$total_price = new Money( $total, 'EUR' );
+
+								echo esc_html( $total_price->format_i18n() );
 
 								?>
 							</td>
@@ -176,7 +179,10 @@ foreach ( $projects as $project ) {
 									</a>
 								</td>
 								<td>
-									<?php echo esc_html( orbis_price( $result->price ) ); ?>
+									<?php
+									$price = new Money( $result->price, 'EUR' );
+									echo esc_html( $price->format_i18n() );
+									?>
 								</td>
 								<td>
 									<?php echo esc_html( $result->name ); ?>
