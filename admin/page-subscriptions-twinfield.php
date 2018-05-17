@@ -433,6 +433,11 @@ foreach ( $subscriptions as $subscription ) {
 								) );
 								$line->set_free_text_3( $result->id );
 
+								if ( 'VHEE' === $vat_code ) {
+									$line->set_performance_type( Pronamic\WP\Twinfield\PerformanceTypes::SERVICES );
+									$line->set_performance_date( $date_start );
+								}
+
 								$register_invoices[] = (object) array(
 									'post_id'    => $result->post_id,
 									'start_date' => $date_start,
@@ -520,21 +525,9 @@ foreach ( $subscriptions as $subscription ) {
 						$posted_company = filter_input( INPUT_POST, 'company', FILTER_SANITIZE_STRING );
 
 						if ( $company->id === $posted_company ) {
-							$client = new Pronamic\WP\Twinfield\Client();
+							global $twinfield_plugin;
 
-							$user         = get_option( 'twinfield_username' );
-							$password     = get_option( 'twinfield_password' );
-							$organisation = get_option( 'twinfield_organisation' );
-							$office       = get_option( 'twinfield_default_office_code' );
-							$type         = get_option( 'twinfield_default_invoice_type' );
-
-							$credentials = new Pronamic\WP\Twinfield\Credentials( $user, $password, $organisation );
-
-							$logon_response = $client->logon( $credentials );
-
-							$session = $client->get_session( $logon_response );
-
-							$xml_processor = new Pronamic\WP\Twinfield\XMLProcessor( $session );
+							$xml_processor = $twinfield_plugin->get_xml_processor();
 
 							$service = new Pronamic\WP\Twinfield\SalesInvoices\SalesInvoiceService( $xml_processor );
 
