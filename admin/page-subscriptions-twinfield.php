@@ -282,6 +282,7 @@ foreach ( $subscriptions as $subscription ) {
 							<th scope="col"><?php esc_html_e( 'Subscription', 'orbis_twinfield' ); ?></th>
 							<th scope="col"><?php esc_html_e( 'Price', 'orbis_twinfield' ); ?></th>
 							<th scope="col"><?php esc_html_e( 'Name', 'orbis_twinfield' ); ?></th>
+							<th scope="col"><?php esc_html_e( 'Free Text 1', 'orbis_twinfield' ); ?></th>
 							<th scope="col"><?php esc_html_e( 'Start Date', 'orbis_twinfield' ); ?></th>
 							<th scope="col"><?php esc_html_e( 'End Date', 'orbis_twinfield' ); ?></th>
 							<th scope="col"><?php esc_html_e( 'Vat Code', 'orbis_twinfield' ); ?></th>
@@ -331,7 +332,7 @@ foreach ( $subscriptions as $subscription ) {
 
 								?>
 							</td>
-							<td colspan="4">
+							<td colspan="5">
 
 							</td>
 							<td>
@@ -438,7 +439,12 @@ foreach ( $subscriptions as $subscription ) {
 								$line->set_vat_code( $vat_code );
 								$line->set_value_excl( (float) $result->price );
 
-								$free_text_1 = $result->name;
+								$free_text_1 = get_post_meta( $result->post_id, '_orbis_invoice_line_description', true );
+
+								if ( empty( $free_text_1 ) ) {
+									$free_text_1 = $result->name;
+								}
+
 								if ( strlen( $free_text_1 ) > 36 ) {
 									// opmerkingen mag maximaal 36 tekens bevatten wanneer het een vrije tekst betreft.
 									$free_text_1 = substr( $free_text_1, 0, 35 ) . '…';
@@ -485,6 +491,9 @@ foreach ( $subscriptions as $subscription ) {
 								</td>
 								<td>
 									<?php echo esc_html( $result->name ); ?>
+								</td>
+								<td>
+									<?php echo esc_html( $line->get_free_text_1() ); ?>
 								</td>
 								<td>
 									<?php echo esc_html( date_i18n( 'D j M Y', $date_start->getTimestamp() ) ); ?>
