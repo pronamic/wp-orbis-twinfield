@@ -149,7 +149,13 @@ foreach ( $subscriptions as $subscription ) {
 		$twinfield_customer = get_post_meta( $company->post_id, '_twinfield_customer_id', true );
 		$country            = get_post_meta( $company->post_id, '_orbis_country', true );
 
-		$header_text = '';
+		$header_texts = array(
+			get_post_meta( $company->post_id, '_orbis_invoice_header_text', true ),
+		);
+
+		$footer_texts = array(
+			get_post_meta( $company->post_id, '_orbis_invoice_footer_text', true ),
+		);
 
 		$vies_countries = array(
 			'AT' => 'Oostenrijk',
@@ -206,13 +212,19 @@ foreach ( $subscriptions as $subscription ) {
 			if ( is_object( $term ) ) {
 				$payment_method_term = $term;
 			}
+
+			$header_texts[] = get_post_meta( $subscription->post_id, '_orbis_invoice_header_text', true );
+			$footer_texts[] = get_post_meta( $subscription->post_id, '_orbis_invoice_footer_text', true );
 		}
 
 		if ( is_object( $payment_method_term ) ) {
-			$header_text .= $payment_method_term->description;
+			$header_texts[] = $payment_method_term->description;
 		}
 
-		$footer_text = sprintf(
+		$header_texts[] = get_option( 'orbis_invoice_header_text' );
+		$footer_texts[] = get_option( 'orbis_invoice_footer_text' );
+
+		$footer_texts[] = sprintf(
 			__( 'Invoice created by Orbis on %s.', 'orbis_twinfield' ),
 			date_i18n( 'D j M Y @ H:i' )
 		);
@@ -226,8 +238,15 @@ foreach ( $subscriptions as $subscription ) {
 		$header->set_customer( $twinfield_customer );
 		$header->set_status( Pronamic\WP\Twinfield\SalesInvoices\SalesInvoiceStatus::STATUS_CONCEPT );
 		$header->set_payment_method( Pronamic\WP\Twinfield\PaymentMethods::BANK );
-		$header->set_header_text( $header_text );
-		$header->set_footer_text( $footer_text );
+
+		$header_texts = array_filter( $header_texts );
+		$header_texts = array_unique( $header_texts );
+
+		$footer_texts = array_filter( $footer_texts );
+		$footer_texts = array_unique( $footer_texts );
+
+		$header->set_header_text( implode( "\r\n\r\n", $header_texts ) );
+		$header->set_footer_text( implode( "\r\n\r\n", $footer_texts ) );
 
 		$register_invoices = array();
 
@@ -247,10 +266,10 @@ foreach ( $subscriptions as $subscription ) {
 						<dd><?php echo esc_html( $twinfield_customer ); ?></dd>
 
 						<dt><?php esc_html_e( 'Header', 'orbis_twinfield' ); ?></dt>
-						<dd><?php echo esc_html( $header_text ); ?></dd>
+						<dd><?php echo nl2br( esc_html( $header->get_header_text() ) ); ?></dd>
 
 						<dt><?php esc_html_e( 'Footer', 'orbis_twinfield' ); ?></dt>
-						<dd><?php echo esc_html( $footer_text ); ?></dd>
+						<dd><?php echo nl2br( esc_html( $header->get_footer_text() ) ); ?></dd>
 					</dl>
 				</div>
 
