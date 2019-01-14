@@ -195,7 +195,7 @@ foreach ( $subscriptions as $subscription ) {
 		if ( isset( $vies_countries[ $country ] ) ) {
 			$vat_code = 'VHEE'; // or perhaps 'VHV'
 
-			$header_text .= 'Btw verlegd.';
+			$header_texts[] = 'Btw verlegd.';
 		} elseif ( 'NL' !== $country ) {
 			$vat_code = 'VHEW';
 		}
