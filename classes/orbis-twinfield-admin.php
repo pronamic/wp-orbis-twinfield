@@ -157,7 +157,7 @@ class Orbis_Twinfield_Admin {
 		// Query
 		$day_function    = '';
 		$join_condition  = '';
-		$where_condition = '';
+		$where_condition = '1 = 1';
 
 		switch ( $interval ) {
 			case 'M':
@@ -167,7 +167,7 @@ class Orbis_Twinfield_Admin {
 				$day_function = 'DAYOFMONTH';
 
 				$join_condition  .= $wpdb->prepare( '( YEAR( invoice.start_date ) = %d AND MONTH( invoice.start_date ) = %d )', $date->format( 'Y' ), $date->format( 'n' ) );
-				$where_condition .= $wpdb->prepare( 'subscription.activation_date <= %s', $last_day_month->format( 'Y-m-d' ) );
+				$where_condition .= $wpdb->prepare( ' AND subscription.activation_date <= %s', $last_day_month->format( 'Y-m-d' ) );
 
 				break;
 			case 'Q':
@@ -177,7 +177,7 @@ class Orbis_Twinfield_Admin {
 				$day_function = 'DAYOFYEAR';
 
 				$join_condition  .= $wpdb->prepare( '( YEAR( invoice.start_date ) = %d AND MONTH( invoice.start_date ) = %d )', $date->format( 'Y' ), $date->format( 'n' ) );
-				$where_condition .= $wpdb->prepare( 'subscription.activation_date <= %s', $last_day_month->format( 'Y-m-d' ) );
+				$where_condition .= $wpdb->prepare( ' AND subscription.activation_date <= %s', $last_day_month->format( 'Y-m-d' ) );
 
 				break;
 			case 'Y':
@@ -193,9 +193,8 @@ class Orbis_Twinfield_Admin {
 
 				// Check if the end date of invoice is in next year.
 				$join_condition  .= $wpdb->prepare( 'YEAR( invoice.end_date ) = %d', $date->format( 'Y' ) + 1 );
-				$where_condition .= $wpdb->prepare( 'DATE( subscription.activation_date ) <= %s', $last_day_month->format( 'Y-m-d' ) );
-				$where_condition .= ' AND ';
-				$where_condition .= $wpdb->prepare( 'DATE_FORMAT( subscription.activation_date, %s ) <= %s', $date->format( 'Y' ) . '-%%m-%%d', $ahead_limit->format( 'Y-m-d' ) );
+				$where_condition .= $wpdb->prepare( ' AND DATE( subscription.activation_date ) <= %s', $last_day_month->format( 'Y-m-d' ) );
+				$where_condition .= $wpdb->prepare( ' AND DATE_FORMAT( subscription.activation_date, %s ) <= %s', $date->format( 'Y' ) . '-%m-%d', $ahead_limit->format( 'Y-m-d' ) );
 
 				break;
 		}
