@@ -156,17 +156,17 @@ class Orbis_Twinfield_Admin {
 
 		// Query
 		$day_function    = '';
-		$join_condition  = '';
+		$join_condition  = 'subscription.id = invoice.subscription_id';
 		$where_condition = '1 = 1';
 
 		switch ( $interval ) {
-			case 'M':
+			case 'M_OLD':
 				$last_day_month = clone $date;
 				$last_day_month->modify( 'last day of this month' );
 
 				$day_function = 'DAYOFMONTH';
 
-				$join_condition  .= $wpdb->prepare( '( YEAR( invoice.start_date ) = %d AND MONTH( invoice.start_date ) = %d )', $date->format( 'Y' ), $date->format( 'n' ) );
+				$join_condition  .= $wpdb->prepare( ' AND ( YEAR( invoice.start_date ) = %d AND MONTH( invoice.start_date ) = %d )', $date->format( 'Y' ), $date->format( 'n' ) );
 				$where_condition .= $wpdb->prepare( ' AND subscription.activation_date <= %s', $last_day_month->format( 'Y-m-d' ) );
 
 				break;
@@ -176,10 +176,11 @@ class Orbis_Twinfield_Admin {
 
 				$day_function = 'DAYOFYEAR';
 
-				$join_condition  .= $wpdb->prepare( '( YEAR( invoice.start_date ) = %d AND MONTH( invoice.start_date ) = %d )', $date->format( 'Y' ), $date->format( 'n' ) );
+				$join_condition  .= $wpdb->prepare( ' AND ( YEAR( invoice.start_date ) = %d AND MONTH( invoice.start_date ) = %d )', $date->format( 'Y' ), $date->format( 'n' ) );
 				$where_condition .= $wpdb->prepare( ' AND subscription.activation_date <= %s', $last_day_month->format( 'Y-m-d' ) );
 
 				break;
+			case 'M':
 			case 'Y':
 			case '2Y':
 			case '3Y':
@@ -192,9 +193,21 @@ class Orbis_Twinfield_Admin {
 				$day_function = 'DAYOFYEAR';
 
 				// Check if the end date of invoice is in next year.
-				$join_condition  .= $wpdb->prepare( 'YEAR( invoice.end_date ) = %d', $date->format( 'Y' ) + 1 );
-				$where_condition .= $wpdb->prepare( ' AND DATE( subscription.activation_date ) <= %s', $last_day_month->format( 'Y-m-d' ) );
-				$where_condition .= $wpdb->prepare( ' AND DATE_FORMAT( subscription.activation_date, %s ) <= %s', $date->format( 'Y' ) . '-%m-%d', $ahead_limit->format( 'Y-m-d' ) );
+				//$join_condition  .= $wpdb->prepare( ' AND YEAR( invoice.end_date ) = %d', $date->format( 'Y' ) + 1 );
+/*
+				$where_condition .= ' AND ( ';
+				$where_condition .= $wpdb->prepare( ' DATE( subscription.activation_date ) <= %s', $last_day_month->format( 'Y-m-d' ) );
+				$where_condition .= $wpdb->prepare( ' AND DATE_FORMAT( subscription.activation_date, %s ) <= %s', $date->format( 'Y' ) . '-%m-%d', $ahead_limit->format( '
+					Y-m-d' ) );
+				$where_condition .= ' AND invoice_number IS NULL';
+				$where_condition .= ' ) OR ( ';
+*/
+				$where_condition .= ' AND ( ';
+				$where_condition .= $wpdb->prepare( ' subscription.expiration_date < %s', date( 'Y-m-d' ) );
+				$where_condition .= ' AND ( subscription.cancel_date IS NULL OR subscription.cancel_date > DATE_SUB( subscription.expiration_date, INTERVAL 14 DAY ) )';
+				$where_condition .= $wpdb->prepare( ' AND ( subscription.cancel_date IS NULL OR subscription.cancel_date > %s )', '2014-01-01' );
+				$where_condition .= ' AND ( subscription.end_date IS NULL OR subscription.end_date > subscription.expiration_date )';
+				$where_condition .= ' ) ';
 
 				break;
 		}
@@ -217,6 +230,7 @@ class Orbis_Twinfield_Admin {
 				subscription.name,
 				subscription.activation_date,
 				subscription.expiration_date,
+				subscription.cancel_date,
 				DAYOFYEAR( subscription.activation_date ) AS activation_dayofyear,
 				invoice.invoice_number,
 				invoice.start_date,
@@ -235,20 +249,15 @@ class Orbis_Twinfield_Admin {
 						ON subscription.type_id = product.id
 					LEFT JOIN
 				$wpdb->orbis_subscriptions_invoices AS invoice
-						ON
-							subscription.id = invoice.subscription_id
-								AND
-							$join_condition
+						ON ( $join_condition )
 			WHERE
-				cancel_date IS NULL
-					AND
-				invoice_number IS NULL
-					AND
 				product.auto_renew
 					AND
 				$interval_condition
 					AND
 				$where_condition
+			GROUP BY
+				subscription.id
 			ORDER BY
 				DAYOFYEAR( subscription.activation_date )
 			;";

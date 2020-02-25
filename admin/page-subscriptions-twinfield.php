@@ -1,4 +1,5 @@
 <?php
+
 use Pronamic\WordPress\Money\Money;
 
 // Date
@@ -285,6 +286,7 @@ foreach ( $subscriptions as $subscription ) {
 							<th scope="col"><?php esc_html_e( 'Free Text 1', 'orbis_twinfield' ); ?></th>
 							<th scope="col"><?php esc_html_e( 'Start Date', 'orbis_twinfield' ); ?></th>
 							<th scope="col"><?php esc_html_e( 'End Date', 'orbis_twinfield' ); ?></th>
+							<th scope="col"><?php esc_html_e( 'Cancel Date', 'orbis_twinfield' ); ?></th>
 							<th scope="col"><?php esc_html_e( 'Vat Code', 'orbis_twinfield' ); ?></th>
 							<th scope="col"><?php esc_html_e( 'Twinfield', 'orbis_twinfield' ); ?></th>
 							<th scope="col"><?php esc_html_e( 'Manual Invoice', 'orbis_twinfield' ); ?></th>
@@ -381,8 +383,8 @@ foreach ( $subscriptions as $subscription ) {
 								$exclude = true;
 							}
 
-							$date_start = new DateTime( $result->activation_date );
-							$date_end   = new DateTime( $result->activation_date );
+							$date_start = new DateTime( $result->expiration_date );
+							$date_end   = new DateTime( $result->expiration_date );
 
 							$day   = $date_start->format( 'd' );
 							$month = $date_start->format( 'n' );
@@ -390,39 +392,29 @@ foreach ( $subscriptions as $subscription ) {
 							switch ( $result->interval ) {
 								// Month
 								case 'M':
-									$date_start->setDate( $date->format( 'Y' ), $date->format( 'n' ), $day );
-
 									$date_end = clone $date_start;
 									$date_end->modify( '+1 month' );
 
 									break;
 								// Quarter
 								case 'Q':
-									$date_start = new DateTime( $result->expiration_date );
-
 									$date_end = new DateTime( $result->expiration_date );
 									$date_end->modify( '+3 month' );
 
 									break;
 								// Year
 								case '2Y':
-									$date_start->setDate( $date->format( 'Y' ), $month, $day );
-
 									$date_end = clone $date_start;
 									$date_end->modify( '+2 year' );
 
 									break;
 								case '3Y':
-									$date_start->setDate( $date->format( 'Y' ), $month, $day );
-
 									$date_end = clone $date_start;
 									$date_end->modify( '+3 year' );
 
 									break;
 								case 'Y':
 								default:
-									$date_start->setDate( $date->format( 'Y' ), $month, $day );
-
 									$date_end = clone $date_start;
 									$date_end->modify( '+1 year' );
 
@@ -500,6 +492,9 @@ foreach ( $subscriptions as $subscription ) {
 								</td>
 								<td>
 									<?php echo esc_html( date_i18n( 'D j M Y', $date_end->getTimestamp() ) ); ?>
+								</td>
+								<td>
+									<?php echo esc_html( $result->cancel_date ); ?>
 								</td>
 								<td>
 									<code><?php echo esc_html( $vat_code ); ?></code>
