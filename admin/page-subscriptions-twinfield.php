@@ -383,8 +383,8 @@ foreach ( $subscriptions as $subscription ) {
 								$exclude = true;
 							}
 
-							$date_start = new DateTime( $result->expiration_date );
-							$date_end   = new DateTime( $result->expiration_date );
+							$date_start = new DateTime( empty( $result->billed_to ) ? $result->activation_date : $result->billed_to );
+							$date_end   = clone $date_start;
 
 							$day   = $date_start->format( 'd' );
 							$month = $date_start->format( 'n' );

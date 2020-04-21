@@ -203,7 +203,7 @@ class Orbis_Twinfield_Admin {
 				$where_condition .= ' ) OR ( ';
 */
 				$where_condition .= ' AND ( ';
-				$where_condition .= $wpdb->prepare( ' subscription.expiration_date < %s', date( 'Y-m-d' ) );
+				$where_condition .= ' ( subscription.billed_to IS NULL OR subscription.billed_to < DATE_SUB( CURDATE(), INTERVAL 14 DAY ) )';
 				$where_condition .= ' AND ( subscription.cancel_date IS NULL OR subscription.cancel_date > DATE_SUB( subscription.expiration_date, INTERVAL 14 DAY ) )';
 				$where_condition .= $wpdb->prepare( ' AND ( subscription.cancel_date IS NULL OR subscription.cancel_date > %s )', '2014-01-01' );
 				$where_condition .= ' AND ( subscription.end_date IS NULL OR subscription.end_date > subscription.expiration_date )';
@@ -231,6 +231,7 @@ class Orbis_Twinfield_Admin {
 				subscription.activation_date,
 				subscription.expiration_date,
 				subscription.cancel_date,
+				subscription.billed_to,
 				DAYOFYEAR( subscription.activation_date ) AS activation_dayofyear,
 				invoice.invoice_number,
 				invoice.start_date,
