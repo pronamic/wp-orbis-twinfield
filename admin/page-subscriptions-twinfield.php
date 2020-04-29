@@ -424,6 +424,8 @@ foreach ( $subscriptions as $subscription ) {
 							$twinfield_article_code    = get_post_meta( $result->product_post_id, '_twinfield_article_code', true );
 							$twinfield_subarticle_code = get_post_meta( $result->product_post_id, '_twinfield_subarticle_code', true );
 
+							$line = null;
+
 							if ( ! $exclude ) {
 								$line = $sales_invoice->new_line();
 								$line->set_article( $twinfield_article_code );
@@ -485,7 +487,13 @@ foreach ( $subscriptions as $subscription ) {
 									<?php echo esc_html( $result->name ); ?>
 								</td>
 								<td>
-									<?php echo esc_html( $line->get_free_text_1() ); ?>
+									<?php 
+
+									if ( null !== $line ) {
+										echo esc_html( $line->get_free_text_1() );
+									}
+
+									?>
 								</td>
 								<td>
 									<?php echo esc_html( date_i18n( 'D j M Y', $date_start->getTimestamp() ) ); ?>
