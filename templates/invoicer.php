@@ -176,7 +176,7 @@ function orbis_twinfield_maybe_create_invoice() {
 			'invoice_number' => $number,
 			'amount'         => $item->value_excl,
 			'seconds'        => $item->seconds,
-			'create_date'    => $date->format( 'Y-m-d' ),
+			'create_date'    => $date->setTimezone( new DateTimeZone( 'UTC' ) )->format( 'Y-m-d H:i:s' ),
 		);
 
 		$format = array(
@@ -511,6 +511,9 @@ if ( $project_id  ) {
 					break;
 			}
 		}
+
+		$header_texts[] = get_post_meta( $item->project_post_id, '_orbis_invoice_header_text', true );
+		$footer_texts[] = get_post_meta( $item->project_post_id, '_orbis_invoice_footer_text', true );
 
 		$free_texts_3[] = \get_post_meta( $item->project_post_id, '_orbis_invoice_line_description', true );
 		$free_texts_3[] = $project_start_date->format( 'd-m-Y' );
