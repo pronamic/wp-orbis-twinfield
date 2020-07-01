@@ -32,6 +32,9 @@ class Orbis_Twinfield_Plugin extends Orbis_Plugin {
 		// Actions
 		add_action( 'init', array( $this, 'init' ) );
 		add_action( 'twinfield_post_customer', array( $this, 'twinfield_post_customer' ), 20, 2 );
+
+		add_filter( 'query_vars', array( $this, 'query_vars' ) );
+		add_filter( 'template_include', array( $this, 'template_include' ) );
 	}
 
 	//////////////////////////////////////////////////
@@ -50,6 +53,46 @@ class Orbis_Twinfield_Plugin extends Orbis_Plugin {
 		add_post_type_support( 'orbis_company', 'twinfield_customer' );
 		add_post_type_support( 'orbis_subs_product', 'twinfield_article' );
 		add_post_type_support( 'orbis_subscription', 'twinfield_invoiceable' );
+
+		// @see https://make.wordpress.org/core/2015/10/07/add_rewrite_rule-accepts-an-array-of-query-vars-in-wordpress-4-4/
+		// Matching
+		add_rewrite_rule(
+			'twinfield/invoicer/?$',
+			array(
+				'orbis_twinfield_invoicer' => true,
+			),
+			'top'
+		);
+	}
+
+	/**
+	 * Query vars.
+	 *
+	 * @param array $query_vars Query vars.
+	 * @return array
+	 */
+	public function query_vars( $query_vars ) {
+		$query_vars[] = 'orbis_twinfield_invoicer';
+
+		return $query_vars;
+	}
+
+	/**
+	 * Template include.
+	 *
+	 * @param string $template Template.
+	 * @return string
+	 */
+	public function template_include( $template ) {
+		$value = \get_query_var( 'orbis_twinfield_invoicer', null );
+
+		if ( null === $value ) {
+			return $template;
+		}
+
+		$template = __DIR__ . '/../templates/invoicer.php';
+
+		return $template;
 	}
 
 	//////////////////////////////////////////////////
