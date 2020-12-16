@@ -431,7 +431,7 @@ foreach ( $subscriptions as $subscription ) {
 								$line->set_article( $twinfield_article_code );
 								$line->set_subarticle( $twinfield_subarticle_code );
 								$line->set_vat_code( $vat_code );
-								$line->set_value_excl( (float) $result->price );
+								$line->set_units_price_excl( (float) $result->price );
 
 								$free_text_1 = get_post_meta( $result->post_id, '_orbis_invoice_line_description', true );
 
