@@ -90,15 +90,15 @@ function orbis_twinfield_maybe_create_invoice() {
 		}
 	}
 
-	$sales_invoice = new \Pronamic\WP\Twinfield\SalesInvoices\SalesInvoice();
+	$sales_invoice = new \Pronamic\WordPress\Twinfield\SalesInvoices\SalesInvoice();
 
 	$header = $sales_invoice->get_header();
 
 	$header->set_office( get_option( 'twinfield_default_office_code' ) );
 	$header->set_type( get_option( 'twinfield_default_invoice_type' ) );
 	$header->set_customer( $sales_invoice_header->customer_id );
-	$header->set_status( \Pronamic\WP\Twinfield\SalesInvoices\SalesInvoiceStatus::STATUS_CONCEPT );
-	$header->set_payment_method( \Pronamic\WP\Twinfield\PaymentMethods::BANK );
+	$header->set_status( \Pronamic\WordPress\Twinfield\SalesInvoices\SalesInvoiceStatus::STATUS_CONCEPT );
+	$header->set_payment_method( \Pronamic\WordPress\Twinfield\PaymentMethods::BANK );
 	$header->set_header_text( $sales_invoice_header->header_text );
 	$header->set_footer_text( $sales_invoice_header->footer_text );
 
@@ -127,7 +127,7 @@ function orbis_twinfield_maybe_create_invoice() {
 		$line->set_free_text_3( $item->free_text_3 );
 
 		if ( 'VHEE' === $item->vat_code ) {
-			$line->set_performance_type( \Pronamic\WP\Twinfield\PerformanceTypes::SERVICES );
+			$line->set_performance_type( \Pronamic\WordPress\Twinfield\PerformanceTypes::SERVICES );
 			$line->set_performance_date( new \DateTime() );
 		}
 	}
@@ -135,20 +135,22 @@ function orbis_twinfield_maybe_create_invoice() {
 	/**
 	 * Send invoice to Twinfield.
 	 */
-	$xml_processor = $twinfield_plugin->get_xml_processor();
+	$twinfield_client = \apply_filters( 'pronamic_twinfield_client', null );
 
-	$service = new \Pronamic\WP\Twinfield\SalesInvoices\SalesInvoiceService( $xml_processor );
+	$organisation = $twinfield_client->get_organisation();
 
-	$response = $service->insert_sales_invoice( $sales_invoice );
+	$office = $organisation->office( '66470' );
 
-	if ( ! $response ) {
-		esc_html_e( 'No response from Twinfield.', 'orbis_twinfield' );
+	$xml_processor = $twinfield_client->get_xml_processor();
 
-		exit;
-	}
+	$xml_processor->set_office( $office );
 
-	if ( ! $response->is_successful() ) {
-		$xml = simplexml_load_string( $response->get_message()->asXML() );
+	$service = new \Pronamic\WordPress\Twinfield\SalesInvoices\SalesInvoiceService( $xml_processor );
+
+	try {
+		$sales_invoice = $service->insert_sales_invoice( $sales_invoice );
+	} catch ( \Pronamic\WordPress\Twinfield\XML\XmlPostErrors $errors ) {
+		$xml = $errors->get_simplexml();
 		$xsl = simplexml_load_file( __DIR__ . '/../admin/twinfield-salesinvoices.xsl' );
 
 		$proc = new XSLTProcessor();
@@ -157,9 +159,9 @@ function orbis_twinfield_maybe_create_invoice() {
 		echo $proc->transformToXML( $xml ); // WPCS: xss ok
 
 		exit;
+	} catch ( \Exception $exception ) {
+		\wp_die( $exception->getMessage() );
 	}
-
-	$sales_invoice = $response->get_sales_invoice();
 
 	$date   = new \DateTimeImmutable();
 	$number = $sales_invoice->get_header()->get_number();
