@@ -560,7 +560,7 @@ foreach ( $subscriptions as $subscription ) {
 
 							$organisation = $twinfield_client->get_organisation();
 
-							$office = $organisation->new_office( '66470' );
+							$office = $organisation->office( '66470' );
 
 							$xml_processor = $twinfield_client->get_xml_processor();
 
@@ -568,32 +568,28 @@ foreach ( $subscriptions as $subscription ) {
 
 							$service = new Pronamic\WordPress\Twinfield\SalesInvoices\SalesInvoiceService( $xml_processor );
 
-							$response = $service->insert_sales_invoice( $sales_invoice );
+							try {
+								$sales_invoice = $service->insert_sales_invoice( $sales_invoice );
 
-							if ( $response ) {
-								if ( $response->is_successful() ) {
-									$sales_invoice = $response->get_sales_invoice();
+								$number = $sales_invoice->get_header()->get_number();
 
-									$number = $sales_invoice->get_header()->get_number();
+								foreach ( $register_invoices as $object ) {
+									$subscription = new Orbis_Subscription( $object->post_id );
 
-									foreach ( $register_invoices as $object ) {
-										$subscription = new Orbis_Subscription( $object->post_id );
-
-										$result = $subscription->register_invoice( $number, $object->start_date, $object->end_date );
-									}
-
-									esc_html_e( 'Twinfield invoice created.', 'orbis_twinfield' );
-								} else {
-									$xml = simplexml_load_string( $response->get_message()->asXML() );
-									$xsl = simplexml_load_file( plugin_dir_path( $this->plugin->file ) . '/admin/twinfield-salesinvoices.xsl' );
-
-									$proc = new XSLTProcessor();
-									$proc->importStyleSheet( $xsl );
-
-									echo $proc->transformToXML( $xml ); // WPCS: xss ok
+									$result = $subscription->register_invoice( $number, $object->start_date, $object->end_date );
 								}
-							} else {
-								esc_html_e( 'No response from Twinfield.', 'orbis_twinfield' );
+
+								esc_html_e( 'Twinfield invoice created.', 'orbis_twinfield' );
+							} catch ( \Pronamic\WordPress\Twinfield\XML\XmlPostErrors $errors ) {
+								$xml = $errors->get_simplexml();
+								$xsl = simplexml_load_file( __DIR__ . '/../admin/twinfield-salesinvoices.xsl' );
+
+								$proc = new XSLTProcessor();
+								$proc->importStyleSheet( $xsl );
+
+								echo $proc->transformToXML( $xml ); // WPCS: xss ok
+							} catch ( \Exception $exception ) {
+								\wp_die( $exception->getMessage() );
 							}
 						}
 					}
