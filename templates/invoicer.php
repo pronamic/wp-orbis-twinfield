@@ -358,7 +358,7 @@ if ( $project_id  ) {
 			project_invoice_totals.project_invoice_numbers,
 			project_timesheet_totals.project_timesheet_time
 		FROM
-			orbis_projects AS project
+			$wpdb->orbis_projects AS project
 				INNER JOIN
 			wp_posts AS project_post
 					ON project.post_id = project_post.ID
@@ -366,7 +366,7 @@ if ( $project_id  ) {
 			wp_users AS manager
 					ON project_post.post_author = manager.ID
 				INNER JOIN
-			orbis_companies AS principal
+			$wpdb->orbis_companies AS principal
 					ON project.principal_id = principal.id
 				LEFT JOIN
 			(
@@ -376,7 +376,7 @@ if ( $project_id  ) {
 					SUM( project_invoice.amount ) AS project_billed_amount,
 					GROUP_CONCAT( DISTINCT project_invoice.invoice_number ) AS project_invoice_numbers
 				FROM
-					orbis_projects_invoices AS project_invoice
+					$wpdb->orbis_projects_invoices AS project_invoice
 				GROUP BY
 					project_invoice.project_id
 			) AS project_invoice_totals ON project_invoice_totals.project_id = project.id
@@ -386,7 +386,7 @@ if ( $project_id  ) {
 					project_timesheet.project_id,
 					SUM( project_timesheet.number_seconds ) AS project_timesheet_time
 				FROM
-					orbis_hours_registration AS project_timesheet
+					$wpdb->orbis_timesheets AS project_timesheet
 				GROUP BY
 					project_timesheet.project_id
 			) AS project_timesheet_totals ON project_timesheet_totals.project_id = project.id
