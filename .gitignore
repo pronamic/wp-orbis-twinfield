@@ -1,0 +1,8 @@
+# Bower
+/bower_components/
+
+# Composer
+/vendor/
+
+# Node.js
+/node_modules/

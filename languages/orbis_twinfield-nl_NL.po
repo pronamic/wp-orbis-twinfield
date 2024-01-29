@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Orbis Twinfield\n"
-"Report-Msgid-Bugs-To: http://wordpress.org/tag/orbis-twinfield\n"
-"POT-Creation-Date: 2014-01-02 09:53:25+00:00\n"
-"PO-Revision-Date: 2014-01-02 10:56+0100\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/orbis-twinfield\n"
+"POT-Creation-Date: 2017-11-08 10:27:25+00:00\n"
+"PO-Revision-Date: 2017-11-08 11:35+0100\n"
 "Last-Translator: Remco Tolsma <info@remcotolsma.nl>\n"
 "Language-Team: Pronamic <info@pronamic.nl>\n"
 "Language: nl_NL\n"
@@ -13,19 +13,162 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e;_x:2c,1\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.6.3\n"
+"X-Generator: Poedit 1.7.4\n"
 
-#: admin/meta-box-customer.php:55
-msgid "Synchronize"
-msgstr "Synchroniseren"
+#: admin/page-projects-twinfield.php:46
+#: admin/page-subscriptions-twinfield.php:211
+msgid "Invoice created by Orbis on %s."
+msgstr "Factuur gemaakt door Orbis op %s."
 
-#: includes/post.php:40
-msgid "Twinfield ID:"
-msgstr "Twinfield ID:"
+#: admin/page-projects-twinfield.php:64
+#: admin/page-subscriptions-twinfield.php:241
+msgid "Customer"
+msgstr "Klant"
 
+#: admin/page-projects-twinfield.php:73
+#: admin/page-subscriptions-twinfield.php:256
+msgid "ID"
+msgstr "ID"
+
+#: admin/page-projects-twinfield.php:74
+msgid "Project"
+msgstr "Project"
+
+#: admin/page-projects-twinfield.php:75
+#: admin/page-subscriptions-twinfield.php:259
+msgid "Price"
+msgstr "Prijs"
+
+#: admin/page-projects-twinfield.php:76
+#: admin/page-subscriptions-twinfield.php:260
+msgid "Name"
+msgstr "Naam"
+
+#: admin/page-projects-twinfield.php:77
+#: admin/page-subscriptions-twinfield.php:264
+#: classes/orbis-twinfield-admin.php:56 classes/orbis-twinfield-admin.php:65
 #: templates/company-twinfield.php:11
 msgid "Twinfield"
 msgstr "Twinfield"
+
+#: admin/page-projects-twinfield.php:78
+#: admin/page-subscriptions-twinfield.php:265
+msgid "Manual Invoice"
+msgstr "Handmatig factureren"
+
+#: admin/page-projects-twinfield.php:111
+#: admin/page-subscriptions-twinfield.php:315
+msgid "Create Invoice"
+msgstr "Factuur maken"
+
+#: admin/page-projects-twinfield.php:123
+#: admin/page-subscriptions-twinfield.php:327
+msgid "Register Invoices"
+msgstr "Registreer facturen"
+
+#: admin/page-projects-twinfield.php:189
+#: admin/page-subscriptions-twinfield.php:466
+msgid "Article"
+msgstr "Artikel"
+
+#: admin/page-projects-twinfield.php:199
+#: admin/page-subscriptions-twinfield.php:476
+msgid "Subarticle"
+msgstr "Subartikel"
+
+#: admin/page-projects-twinfield.php:262
+#: admin/page-subscriptions-twinfield.php:541
+msgid "Twinfield invoice created."
+msgstr "Twinfield factuur gemaakt."
+
+#: admin/page-projects-twinfield.php:273
+#: admin/page-subscriptions-twinfield.php:552
+msgid "No response from Twinfield."
+msgstr "Geen antwoord van Twinfield."
+
+#: admin/page-subscriptions-twinfield.php:45
+msgid "Inserted"
+msgstr "Toegevoegd"
+
+#: admin/page-subscriptions-twinfield.php:46
+msgid "Failed"
+msgstr "Mislukt"
+
+#: admin/page-subscriptions-twinfield.php:90
+msgid "This month"
+msgstr "Deze maand"
+
+#: admin/page-subscriptions-twinfield.php:99
+msgid "Interval"
+msgstr "Interval"
+
+#: admin/page-subscriptions-twinfield.php:100
+msgid "Yearly"
+msgstr "Jaarljks"
+
+#: admin/page-subscriptions-twinfield.php:101
+msgid "Two Yearly"
+msgstr "Tweejaarlijks"
+
+#: admin/page-subscriptions-twinfield.php:102
+msgid "Three Yearly"
+msgstr "Driejaarljks"
+
+#: admin/page-subscriptions-twinfield.php:103
+msgid "Quarterly"
+msgstr "Kwartaal"
+
+#: admin/page-subscriptions-twinfield.php:104
+msgid "Monthly"
+msgstr "Maandelijks"
+
+#: admin/page-subscriptions-twinfield.php:110
+msgid "Execute"
+msgstr "Uitvoeren"
+
+#: admin/page-subscriptions-twinfield.php:244
+msgid "Header"
+msgstr "Header"
+
+#: admin/page-subscriptions-twinfield.php:247
+msgid "Footer"
+msgstr "Footer"
+
+#: admin/page-subscriptions-twinfield.php:257
+msgid "Exclude"
+msgstr "Uitsluiten"
+
+#: admin/page-subscriptions-twinfield.php:258
+msgid "Subscription"
+msgstr "Abonnement"
+
+#: admin/page-subscriptions-twinfield.php:261
+msgid "Start Date"
+msgstr "Startdatum"
+
+#: admin/page-subscriptions-twinfield.php:262
+msgid "End Date"
+msgstr "Einddatum"
+
+#: admin/page-subscriptions-twinfield.php:263
+msgid "Vat Code"
+msgstr "Btw-code"
+
+#: admin/page-subscriptions-twinfield.php:285
+msgid "Update"
+msgstr "Update"
+
+#: classes/orbis-twinfield-admin.php:55
+msgid "Orbis Projects Twinfield"
+msgstr "Orbis projecten Twinfield"
+
+#: classes/orbis-twinfield-admin.php:64
+msgid "Orbis Subscriptions Twinfield"
+msgstr "Orbis abonnementen Twinfield"
+
+#: classes/orbis-twinfield-admin.php:104
+msgid "Twinfield ID:"
+msgstr "Twinfield ID:"
 
 #: templates/company-twinfield.php:16
 msgid "Twinfield ID"
@@ -55,14 +198,17 @@ msgstr "Pronamic"
 msgid "http://www.pronamic.eu/"
 msgstr "http://www.pronamic.nl/"
 
+#~ msgid "Synchronize"
+#~ msgstr "Synchroniseren"
+
+#~ msgid "Orbis ID: %s"
+#~ msgstr "Orbis ID: %s"
+
 #~ msgid "Company ID"
 #~ msgstr "Bedrijf ID"
 
 #~ msgid "Type"
 #~ msgstr "Type"
-
-#~ msgid "Name"
-#~ msgstr "Naam"
 
 #~ msgid "License Key"
 #~ msgstr "Licentiesleutel"
@@ -78,9 +224,6 @@ msgstr "http://www.pronamic.nl/"
 
 #~ msgid "Subscriptions"
 #~ msgstr "Abonnementen"
-
-#~ msgid "Subscription"
-#~ msgstr "Abonnement"
 
 #~ msgctxt "slug"
 #~ msgid "subscriptions"
@@ -107,14 +250,8 @@ msgstr "http://www.pronamic.nl/"
 #~ msgid "Login required"
 #~ msgstr "Inloggen vereist"
 
-#~ msgid "Price"
-#~ msgstr "Prijs"
-
 #~ msgid "Subscription Details"
 #~ msgstr "Abonnement details"
-
-#~ msgid "Orbis ID"
-#~ msgstr "Orbis ID"
 
 #~ msgid "Cancel Date"
 #~ msgstr "Opzeggingsdatum"
@@ -128,29 +265,11 @@ msgstr "http://www.pronamic.nl/"
 #~ msgid "User"
 #~ msgstr "Gebruiker"
 
-#~ msgid "Start Date"
-#~ msgstr "Startdatum"
-
-#~ msgid "End Date"
-#~ msgstr "Einddatum"
-
 #~ msgid "Invoice Number"
 #~ msgstr "Factuurnummer"
 
 #~ msgid "Company"
 #~ msgstr "Bedrijf"
-
-#~ msgid "Inserted"
-#~ msgstr "Toegevoegd"
-
-#~ msgid "Failed"
-#~ msgstr "Mislukt"
-
-#~ msgid "Update"
-#~ msgstr "Update"
-
-#~ msgid "ID"
-#~ msgstr "ID"
 
 #~ msgid "Notice"
 #~ msgstr "Opmerking"
@@ -355,9 +474,6 @@ msgstr "http://www.pronamic.nl/"
 #~ msgid "Projects"
 #~ msgstr "Projecten"
 
-#~ msgid "Project"
-#~ msgstr "Project"
-
 #~ msgctxt "orbis_project"
 #~ msgid "Add New"
 #~ msgstr "Nieuw project"
@@ -479,9 +595,6 @@ msgstr "http://www.pronamic.nl/"
 
 #~ msgid "Domains to invoice"
 #~ msgstr "Domeinen te facturen"
-
-#~ msgid "To Invoice"
-#~ msgstr "Te factureren"
 
 #~ msgid "Project Information"
 #~ msgstr "Project informatie"
