@@ -1,11 +1,35 @@
 <?php
 
-function orbis_twinfield_invoice_link( $link, $invoice_number ) {
-	if ( ! empty( $invoice_number ) ) {
-		$link = home_url( sprintf( '/facturen/%s/', $invoice_number ) );
-	}
+add_filter(
+	'orbis_invoice_url',
+	function ( $url, $data ) {
+		if ( '' === $data ) {
+			return $url;
+		}
 
-	return $link;
-}
+		$info = json_decode( $data );
 
-add_filter( 'orbis_invoice_link', 'orbis_twinfield_invoice_link', 10, 2 );
+		if ( ! is_object( $info ) ) {
+			return $url;
+		}
+
+		if ( ! property_exists( $info, 'host' ) ) {
+			return $url;
+		}
+
+		if ( ! property_exists( $info, 'invoice_number' ) ) {
+			return $url;
+		}
+
+		if ( 'accounting.twinfield.com' !== $info->host ) {
+			return $url;
+		}
+
+		return home_url( sprintf(
+			'/facturen/%s/',
+			$info->invoice_number
+		) );
+	},
+	10,
+	2
+);
