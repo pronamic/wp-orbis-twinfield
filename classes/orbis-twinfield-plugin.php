@@ -11,6 +11,13 @@
  */
 class Orbis_Twinfield_Plugin extends Orbis_Plugin {
 	/**
+	 * Admin.
+	 *
+	 * @var Orbis_Twinfield_Admin|null
+	 */
+	private $admin;
+
+	/**
 	 * Construct and initialize the plugin
 	 *
 	 * @param string $file plugin main file
