@@ -19,7 +19,7 @@ host( 'orbis.pronamic.nl' )
 	->set( 'hostname', 'esm7.siteground.biz' )
 	->set( 'remote_user', 'u155-jlog1cramrrx' )
 	->set( 'port', 18765 )
-	->set( 'deploy_path', '~/projects/wp-orbis-twinfield' )
+	->set( 'deploy_path', '~/projects/orbis-twinfield' )
 	->set( 'plugins_dir', '~/www/orbis.pronamic.nl/public_html/wp-content/plugins' );
 
 /**
