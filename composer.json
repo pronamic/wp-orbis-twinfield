@@ -1,11 +1,38 @@
 {
-    "require-dev": {
-        "squizlabs/php_codesniffer": "3.13.6",
-        "wp-coding-standards/wpcs": "3.4.1"
-    },
-    "config": {
-        "allow-plugins": {
-            "dealerdirect/phpcodesniffer-composer-installer": true
-        }
-    }
+	"name": "pronamic/wp-orbis-twinfield",
+	"description": "The Orbis Twinfield plugin allows you to synchronize Orbis information to Twinfield.",
+	"license": "GPL-2.0-or-later",
+	"type": "wordpress-plugin",
+	"require-dev": {
+		"pronamic/wp-coding-standards": "^2.1",
+		"wp-cli/dist-archive-command": "*",
+		"wp-cli/wp-cli-bundle": "*"
+	},
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
+	},
+	"scripts": {
+		"build": [
+			"rm -rf ./build/stage-1",
+			"rm -rf ./build/orbis-twinfield",
+			"rsync --recursive --verbose --exclude-from=.distignore --exclude=/vendor/ ./ ./build/stage-1/",
+			"composer install --no-dev --prefer-dist --optimize-autoloader --working-dir=./build/stage-1/",
+			"rsync --recursive --verbose --exclude-from=.distignore ./build/stage-1/ ./build/orbis-twinfield/",
+			"vendor/bin/wp i18n make-pot ./build/orbis-twinfield/ --slug=orbis-twinfield",
+			"vendor/bin/wp i18n make-mo ./build/orbis-twinfield/languages/",
+			"vendor/bin/wp dist-archive ./build/orbis-twinfield/ --plugin-dirname=orbis-twinfield --force"
+		],
+		"dist-archive": "wp dist-archive . --plugin-dirname=orbis-twinfield",
+		"make-pot": [
+			"@build",
+			"rsync --recursive --delete --verbose ./build/orbis-twinfield/languages/ ./languages/",
+			"vendor/bin/wp i18n update-po ./languages/orbis-twinfield.pot"
+		],
+		"phpcs": "vendor/bin/phpcs",
+		"qa": [
+			"@phpcs"
+		]
+	}
 }
